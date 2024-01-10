@@ -1,8 +1,14 @@
+import { Button } from "../ui/button"
 
 
 const Footer = () => {
   return (
-    <div>Footer</div>
+    <div>
+
+      <Button>
+        Footer
+      </Button>
+    </div>
   )
 }
 
