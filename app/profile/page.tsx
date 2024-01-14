@@ -2,7 +2,7 @@
 
 const Profile = () => {
   return (
-    <div>Your Profile will displayed here...</div>
+    <div className="min-h-screen flex flex-center">Your Profile will displayed here...</div>
   )
 }
 
