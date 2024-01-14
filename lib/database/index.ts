@@ -1,11 +1,11 @@
-import mongoose from "mongoose"
+// import mongoose from "mongoose"
 
-const MONGODB_URL = process.env.MONGODB_URL
+// const MONGODB_URL = process.env.MONGODB_URL
 
-let cached = (global as any ).mongoose || {conn: null, promise: null}
+// let cached = (global as any ).mongoose || {conn: null, promise: null}
 
-export const connectToDatabase = async () => {
-    // check if connection exists 
+// export const connectToDatabase = async () => {
+//     // check if connection exists 
 
-    if (cached.conn) return cached.conn;
-}
+//     if (cached.conn) return cached.conn;
+// }
