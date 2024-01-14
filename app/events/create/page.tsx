@@ -3,7 +3,9 @@
 const Create = () => {
   return (
     <div className="min-h-screen flex flex-center ">
-        Create an Event
+       The page to create an Event
+
+        Currently working on this page...
     </div>
   )
 }
