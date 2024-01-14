@@ -25,8 +25,6 @@ const NavItems = () => {
           )  }   
             )
         }
-        
-        
         </ul>
   )
 }
