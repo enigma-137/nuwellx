@@ -1,17 +1,13 @@
-import type { Metadata } from 'next'
-import { Poppins } from 'next/font/google'
-import './globals.css'
-import { ClerkProvider } from '@clerk/nextjs'
 
-const poppins = Poppins({ 
-  subsets: ['latin'],
-  weight: ['400', "500", "600", "700"],
-  variable: '--font-poppins'
-})
+import './globals.css'
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Evento',
-  description: 'Find the best events around your school',
+  title: 'Food Analyzer',
+  description: 'Analyze food images using AI',
 }
 
 export default function RootLayout({
@@ -20,11 +16,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <ClerkProvider>
-     <html lang="en">
-      <body className={poppins.className}>{children}</body>
+    <html lang="en">
+      <body className={inter.className}>{children}</body>
     </html>
-    </ClerkProvider>
-   
   )
 }
