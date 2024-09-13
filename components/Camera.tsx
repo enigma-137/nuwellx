@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useRef, useCallback } from 'react'
+import React, { useRef, useState, useCallback } from 'react'
 import Webcam from 'react-webcam'
 import { Button } from './ui/button'
 
@@ -10,6 +10,7 @@ interface CameraProps {
 
 export default function Camera({ onCapture }: CameraProps) {
   const webcamRef = useRef<Webcam>(null)
+  const [facingMode, setFacingMode] = useState('user') // 'user' for front camera, 'environment' for back camera
 
   const capture = useCallback(() => {
     const imageSrc = webcamRef.current?.getScreenshot()
@@ -18,6 +19,10 @@ export default function Camera({ onCapture }: CameraProps) {
     }
   }, [webcamRef, onCapture])
 
+  const switchCamera = () => {
+    setFacingMode((prevMode) => (prevMode === 'user' ? 'environment' : 'user'))
+  }
+
   return (
     <div className="flex flex-col items-center">
       <Webcam
@@ -25,12 +30,19 @@ export default function Camera({ onCapture }: CameraProps) {
         ref={webcamRef}
         screenshotFormat="image/jpeg"
         className="mb-4"
+        videoConstraints={{ facingMode }}
       />
       <Button
         onClick={capture}
-        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+       
       >
         Capture Image
+      </Button>
+      <Button
+        onClick={switchCamera}
+   variant="ghost"
+      >
+        Switch Camera
       </Button>
     </div>
   )
