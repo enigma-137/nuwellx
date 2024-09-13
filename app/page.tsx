@@ -1,56 +1,48 @@
 'use client'
 
-import React, { useState } from 'react'
-import Camera from '@/components/Camera'
-import Results from '@/components/Results'
+import React, { useRef, useState, useCallback } from 'react'
+import Webcam from 'react-webcam'
 
-import axios from 'axios'
-import { Loader } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+interface CameraProps {
+  onCapture: (imageData: string) => void
+}
 
-export default function Home() {
-  const [analysis, setAnalysis] = useState<string | null>(null)
-  const [loading, setLoading] = useState(false)
+export default function Camera({ onCapture }: CameraProps) {
+  const webcamRef = useRef<Webcam>(null)
+  const [facingMode, setFacingMode] = useState('user') // 'user' for front camera, 'environment' for back camera
 
-  const handleCapture = async (imageData: string) => {
-    setLoading(true)
-    try {
-      const response = await axios.post('/api/analyze', { imageData })
-      setAnalysis(response.data.analysis)
-    } catch (error) {
-      console.error('Error analyzing image:', error)
-      setAnalysis('Failed to analyze image. Please try again.')
-    } finally {
-      setLoading(false)
+  const capture = useCallback(() => {
+    const imageSrc = webcamRef.current?.getScreenshot()
+    if (imageSrc) {
+      onCapture(imageSrc.split(',')[1]) // Remove the data URL prefix
     }
-  }
+  }, [webcamRef, onCapture])
 
-  const resetAnalysis = () => {
-    setAnalysis(null)
+  const switchCamera = () => {
+    setFacingMode((prevMode) => (prevMode === 'user' ? 'environment' : 'user'))
   }
 
   return (
-    <main className="flex min-h-screen  flex-col items-center justify-between p-24">
-      <h1 className="text-4xl font-bold mb-8">Nuwell Food Analyzer</h1>
-      
-      {/* Conditionally render the Camera component if there's no analysis */}
-      {!analysis && !loading && <Camera onCapture={handleCapture} />}
-      
-      {/* Display loading message */}
-      {loading && <Loader />}
-      
-      {/* Display results if analysis is available */}
-      {analysis && (
-        <>
-          <Results analysis={analysis} />
-          <Button
-            onClick={resetAnalysis}
-         className='m-4'
-          >
-            Capture Another Image
-          </Button>
-        </>
-      )}
-    </main>
+    <div className="flex flex-col items-center">
+      <Webcam
+        audio={false}
+        ref={webcamRef}
+        screenshotFormat="image/jpeg"
+        className="mb-4"
+        videoConstraints={{ facingMode }}
+      />
+      <button
+        onClick={capture}
+        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mb-2"
+      >
+        Capture Image
+      </button>
+      <button
+        onClick={switchCamera}
+        className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+      >
+        Switch Camera
+      </button>
+    </div>
   )
 }
