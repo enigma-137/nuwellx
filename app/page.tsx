@@ -6,6 +6,7 @@ import Results from '@/components/Results'
 
 import axios from 'axios'
 import { Loader } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
 export default function Home() {
   const [analysis, setAnalysis] = useState<string | null>(null)
@@ -29,8 +30,8 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen bg-black flex-col items-center justify-between p-24">
-      <h1 className="text-4xl text-white font-bold mb-8">Food Analyzer</h1>
+    <main className="flex min-h-screen  flex-col items-center justify-between p-24">
+      <h1 className="text-4xl font-bold mb-8">Food Analyzer</h1>
       
       {/* Conditionally render the Camera component if there's no analysis */}
       {!analysis && !loading && <Camera onCapture={handleCapture} />}
@@ -42,12 +43,12 @@ export default function Home() {
       {analysis && (
         <>
           <Results analysis={analysis} />
-          <button
+          <Button
             onClick={resetAnalysis}
             className="mt-4 px-4 py-2 bg-blue-900 rounded"
           >
             Capture Another Image
-          </button>
+          </Button>
         </>
       )}
     </main>

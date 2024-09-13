@@ -2,6 +2,7 @@
 
 import React, { useRef, useCallback } from 'react'
 import Webcam from 'react-webcam'
+import { Button } from './ui/button'
 
 interface CameraProps {
   onCapture: (imageData: string) => void
@@ -25,12 +26,12 @@ export default function Camera({ onCapture }: CameraProps) {
         screenshotFormat="image/jpeg"
         className="mb-4"
       />
-      <button
+      <Button
         onClick={capture}
         className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
       >
         Capture Image
-      </button>
+      </Button>
     </div>
   )
 }
