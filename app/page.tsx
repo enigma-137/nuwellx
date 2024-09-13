@@ -13,7 +13,7 @@ const Page = () => {
 
   return (
     <div className=" flex flex-col gap-3 items-center justify-center min-h-screen">
-     <p>Scan foods to get their nutritional and other information!</p> 
+     <p className='p-12'>Scan foods to get their nutritional and other information!</p> 
 
      <div>
      <Button onClick={handleRedirect} className="px-6 py-3">
