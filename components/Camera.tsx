@@ -32,6 +32,8 @@ export default function Camera({ onCapture }: CameraProps) {
         className="mb-4"
         videoConstraints={{ facingMode }}
       />
+
+      <div className='flex'>
       <Button
         onClick={capture}
        
@@ -44,6 +46,8 @@ export default function Camera({ onCapture }: CameraProps) {
       >
         Switch Camera
       </Button>
+      </div>
+     
     </div>
   )
 }
