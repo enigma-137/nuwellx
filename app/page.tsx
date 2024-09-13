@@ -5,6 +5,7 @@ import Camera from '@/components/Camera'
 import Results from '@/components/Results'
 
 import axios from 'axios'
+import { Loader } from 'lucide-react'
 
 export default function Home() {
   const [analysis, setAnalysis] = useState<string | null>(null)
@@ -35,7 +36,7 @@ export default function Home() {
       {!analysis && !loading && <Camera onCapture={handleCapture} />}
       
       {/* Display loading message */}
-      {loading && <p className='text-white'>Analyzing image...</p>}
+      {loading && <Loader />}
       
       {/* Display results if analysis is available */}
       {analysis && (
