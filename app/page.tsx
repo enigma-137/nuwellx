@@ -30,7 +30,7 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen  flex-col items-center justify-between p-24">
+    <main className="flex min-h-screen  flex-col items-center justify-between p-12">
       <h1 className="text-4xl font-bold mb-8">Nuwell Food Analyzer</h1>
       
       {/* Conditionally render the Camera component if there's no analysis */}
