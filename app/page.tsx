@@ -16,7 +16,7 @@ const Page = () => {
     <div className="flex flex-col gap-6 items-center justify-center min-h-screen bg-gray-100 p-8">
       <div className="text-center max-w-lg">
         <h1 className="text-3xl font-bold text-gray-900 mb-4">
-          Welcome to Food Scanner
+          NuWell Food Scanner
         </h1>
         <p className='text-lg text-gray-700 mb-6'>
           Scan foods to get their nutritional and other information! Explore a world of healthier choices and stay informed.
@@ -29,14 +29,13 @@ const Page = () => {
         </Button>
       </div>
 
-      {/* Optional: Add an illustrative image */}
       <div className="mt-8">
         <Image
           src="/image.jpeg" 
           alt="Food Scanner Illustration"
           className="rounded-lg shadow-lg"
-          width={200}
-          height={200}
+          width={400}
+          height={400}
         />
       </div>
     </div>

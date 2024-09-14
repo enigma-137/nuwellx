@@ -30,28 +30,40 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen  flex-col items-center justify-between p-12">
-      <h1 className="text-xl md:text-4xl font-bold mb-8">Nuwell Food Analyzer</h1>
+    <main className="flex flex-col items-center justify-center min-h-screen p-6 bg-gray-50">
+      <h1 className="text-2xl md:text-4xl font-bold mb-6 text-center text-gray-800">Nuwell Food Analyzer</h1>
 
-      {!analysis && !loading && <p  className='text-sm font-medium py-4'> Place the camera on any food substance to get nutritional information</p>}
-      
+      {!analysis && !loading && (
+        <p className="text-base md:text-lg font-medium mb-6 p-5 rounded-xl shadow-inner text-gray-700 text-center">
+          Place the camera on any food substance to get nutritional information
+        </p>
+      )}
+
       {/* Conditionally render the Camera component if there's no analysis */}
-      {!analysis && !loading && <Camera onCapture={handleCapture} />}
-      
+      {!analysis && !loading && (
+        <div className="w-full max-w-md p-4 bg-white rounded-lg shadow-md border border-gray-200">
+          <Camera onCapture={handleCapture} />
+        </div>
+      )}
+
       {/* Display loading message */}
-      {loading && <Loader />}
-      
+      {loading && (
+        <div className="flex items-center justify-center w-full max-w-md p-4 bg-white rounded-lg shadow-md border border-gray-200">
+          <Loader className="text-gray-500 animate-spin" />
+        </div>
+      )}
+
       {/* Display results if analysis is available */}
       {analysis && (
-        <>
+        <div className="w-full max-w-md p-4 bg-white rounded-lg shadow-md border border-gray-200 text-center">
           <Results analysis={analysis} />
           <Button
             onClick={resetAnalysis}
-         className='m-4 font-semibold'
+            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600"
           >
             Capture Another Image
           </Button>
-        </>
+        </div>
       )}
     </main>
   )
