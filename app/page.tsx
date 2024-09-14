@@ -20,7 +20,7 @@ const Page = () => {
           NuWell Food Scanner <ScanSearchIcon />
         </h1>
         <p className='text-lg text-gray-700 mb-6'>
-          Scan foods to get their nutritional and other information! Explore a world of healthier choices and stay informed.
+          Scan foods to get their nutritional composition and other information! Explore a world of healthier choices and stay informed.
         </p>
         <Button 
           onClick={handleRedirect} 
