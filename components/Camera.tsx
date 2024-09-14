@@ -40,7 +40,7 @@ export default function Camera({ onCapture }: CameraProps) {
       >
         Capture Image
       </Button>
-      <Button
+      <Button className='font-semibold'
         onClick={switchCamera}
    variant="ghost"
       >

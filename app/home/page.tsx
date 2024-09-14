@@ -47,7 +47,7 @@ export default function Home() {
           <Results analysis={analysis} />
           <Button
             onClick={resetAnalysis}
-         className='m-4'
+         className='m-4 font-semibold'
           >
             Capture Another Image
           </Button>

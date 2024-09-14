@@ -5,259 +5,63 @@
 
 
 
+
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 20 14.3% 4.1%;
+    --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
-    --card-foreground: 20 14.3% 4.1%;
+    --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
-    --popover-foreground: 20 14.3% 4.1%;
-    --primary: 24.6 95% 53.1%;
-    --primary-foreground: 60 9.1% 97.8%;
-    --secondary: 60 4.8% 95.9%;
-    --secondary-foreground: 24 9.8% 10%;
-    --muted: 60 4.8% 95.9%;
-    --muted-foreground: 25 5.3% 44.7%;
-    --accent: 60 4.8% 95.9%;
-    --accent-foreground: 24 9.8% 10%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 60 9.1% 97.8%;
-    --border: 20 5.9% 90%;
-    --input: 20 5.9% 90%;
-    --ring: 24.6 95% 53.1%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
     --radius: 0.5rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
   }
 
   .dark {
-    --background: 20 14.3% 4.1%;
-    --foreground: 60 9.1% 97.8%;
-    --card: 20 14.3% 4.1%;
-    --card-foreground: 60 9.1% 97.8%;
-    --popover: 20 14.3% 4.1%;
-    --popover-foreground: 60 9.1% 97.8%;
-    --primary: 20.5 90.2% 48.2%;
-    --primary-foreground: 60 9.1% 97.8%;
-    --secondary: 12 6.5% 15.1%;
-    --secondary-foreground: 60 9.1% 97.8%;
-    --muted: 12 6.5% 15.1%;
-    --muted-foreground: 24 5.4% 63.9%;
-    --accent: 12 6.5% 15.1%;
-    --accent-foreground: 60 9.1% 97.8%;
-    --destructive: 0 72.2% 50.6%;
-    --destructive-foreground: 60 9.1% 97.8%;
-    --border: 12 6.5% 15.1%;
-    --input: 12 6.5% 15.1%;
-    --ring: 20.5 90.2% 48.2%;
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
   }
 }
 
 
-* {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  scroll-behavior: smooth;
-}
 
-body {
-  font-family: var(--font-poppins)
-}
-
-.filter-grey {
-  filter: brightness(0) saturate(100%) invert(47%) sepia(0%) saturate(217%)
-    hue-rotate(32deg) brightness(98%) contrast(92%);
-}
-
-/* ========================================== TAILWIND STYLES */
-@layer utilities {
-  .wrapper {
-    @apply max-w-7xl lg:mx-auto p-5 md:px-10 xl:px-0 w-full;
-  }
-
-  .flex-center {
-    @apply flex justify-center items-center;
-  }
-
-  .flex-between {
-    @apply flex justify-between items-center;
-  }
-
-  /* TYPOGRAPHY */
-  /* 64 */
-  .h1-bold {
-    @apply font-bold text-[40px] leading-[48px] lg:text-[48px] lg:leading-[60px]  xl:text-[58px] xl:leading-[74px];
-  }
-
-  /* 40 */
-  .h2-bold {
-    @apply font-bold text-[32px] leading-[40px] lg:text-[36px] lg:leading-[44px] xl:text-[40px] xl:leading-[48px];
-  }
-
-  .h2-medium {
-    @apply font-medium text-[32px] leading-[40px] lg:text-[36px] lg:leading-[44px] xl:text-[40px] xl:leading-[48px];
-  }
-
-  /* 36 */
-  .h3-bold {
-    @apply font-bold text-[28px] leading-[36px] md:text-[36px] md:leading-[44px];
-  }
-
-  .h3-medium {
-    @apply font-medium text-[28px] leading-[36px] md:text-[36px] md:leading-[44px];
-  }
-
-  /* 32 */
-  .h4-medium {
-    @apply font-medium text-[32px] leading-[40px];
-  }
-
-  /* 28 */
-  .h5-bold {
-    @apply font-bold text-[28px] leading-[36px];
-  }
-
-  /* 24 */
-  .p-bold-24 {
-    @apply font-bold text-[24px] leading-[36px];
-  }
-
-  .p-medium-24 {
-    @apply font-medium text-[24px] leading-[36px];
-  }
-
-  .p-regular-24 {
-    @apply font-normal text-[24px] leading-[36px];
-  }
-
-  /* 20 */
-  .p-bold-20 {
-    @apply font-bold text-[20px] leading-[30px] tracking-[2%];
-  }
-
-  .p-semibold-20 {
-    @apply text-[20px] font-semibold leading-[30px] tracking-[2%];
-  }
-
-  .p-medium-20 {
-    @apply text-[20px] font-medium leading-[30px];
-  }
-
-  .p-regular-20 {
-    @apply text-[20px] font-normal leading-[30px] tracking-[2%];
-  }
-
-  /* 18 */
-  .p-semibold-18 {
-    @apply text-[18px] font-semibold leading-[28px] tracking-[2%];
-  }
-
-  .p-medium-18 {
-    @apply text-[18px] font-medium leading-[28px];
-  }
-
-  .p-regular-18 {
-    @apply text-[18px] font-normal leading-[28px] tracking-[2%];
-  }
-
-  /* 16 */
-  .p-bold-16 {
-    @apply text-[16px] font-bold leading-[24px];
-  }
-
-  .p-medium-16 {
-    @apply text-[16px] font-medium leading-[24px];
-  }
-
-  .p-regular-16 {
-    @apply text-[16px] font-normal leading-[24px];
-  }
-
-  /* 14 */
-  .p-semibold-14 {
-    @apply text-[14px] font-semibold leading-[20px];
-  }
-
-  .p-medium-14 {
-    @apply text-[14px] font-medium leading-[20px];
-  }
-
-  .p-regular-14 {
-    @apply text-[14px] font-normal leading-[20px];
-  }
-
-  /* 12 */
-  .p-medium-12 {
-    @apply text-[12px] font-medium leading-[20px];
-  }
-
-  /* SHADCN OVERRIDES */
-  .select-field {
-    @apply w-full bg-grey-50 h-[54px] placeholder:text-grey-500 rounded-full p-regular-16 px-5 py-3 border-none focus-visible:ring-transparent focus:ring-transparent !important;
-  }
-
-  .input-field {
-    @apply bg-grey-50 h-[54px] focus-visible:ring-offset-0 placeholder:text-grey-500 rounded-full p-regular-16 px-4 py-3 border-none focus-visible:ring-transparent !important;
-  }
-
-  .textarea {
-    @apply bg-grey-50 flex flex-1 placeholder:text-grey-500 p-regular-16 px-5 py-3 border-none focus-visible:ring-transparent !important;
-  }
-
-  .button {
-    @apply rounded-full h-[54px] p-regular-16;
-  }
-
-  .select-item {
-    @apply py-3 cursor-pointer  focus:bg-primary-50;
-  }
-
-  .toggle-switch {
-    @apply bg-gray-300 !important;
-  }
-}
-
-/* ========================================== CLERK STYLES */
-.cl-logoImage {
-  height: 38px;
-}
-
-.cl-userButtonBox {
-  flex-direction: row-reverse;
-}
-
-.cl-userButtonOuterIdentifier {
-  font-size: 16px;
-}
-
-.cl-userButtonPopoverCard {
-  right: 4px !important;
-}
-
-.cl-formButtonPrimary:hover,
-.cl-formButtonPrimary:focus,
-.cl-formButtonPrimary:active {
-  background-color: #FFA500
-}
-
-/* ========================================== REACT-DATEPICKER STYLES */
-.datePicker {
-  width: 100%;
-}
-
-.react-datepicker__input-container input {
-  background-color: transparent;
-  width: 100%;
-  outline: none;
-  margin-left: 16px;
-}
-
-.react-datepicker__day--selected {
-  background-color: #FFA500 !important;
-  color: #ffffff !important;
-  border-radius: 4px;
-}
-
-.react-datepicker__time-list-item--selected {
-  background-color: #FFA500 !important;
-}
