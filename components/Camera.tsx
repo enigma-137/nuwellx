@@ -3,6 +3,7 @@
 import React, { useRef, useState, useCallback } from 'react'
 import Webcam from 'react-webcam'
 import { Button } from './ui/button'
+import { CameraIcon, SwitchCameraIcon } from 'lucide-react'
 
 interface CameraProps {
   onCapture: (imageData: string) => void
@@ -33,18 +34,18 @@ export default function Camera({ onCapture }: CameraProps) {
         videoConstraints={{ facingMode }}
       />
 
-      <div className='flex'>
+      <div className='flex gap-4'>
       <Button
         onClick={capture}
        
       >
-        Capture Image
+        Capture Image <CameraIcon className='inline ml-2'/>
       </Button>
       <Button className='font-semibold'
         onClick={switchCamera}
-   variant="ghost"
+   variant="outline"
       >
-        Switch Camera
+        Switch Camera <SwitchCameraIcon   className='inline ml-2'/>
       </Button>
       </div>
      

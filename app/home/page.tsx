@@ -5,7 +5,7 @@ import Camera from '@/components/Camera'
 import Results from '@/components/Results'
 
 import axios from 'axios'
-import { Loader } from 'lucide-react'
+import { CameraIcon, Loader } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 export default function Home() {
@@ -31,7 +31,7 @@ export default function Home() {
 
   return (
     <main className="flex flex-col items-center justify-center min-h-screen p-6 bg-gray-50">
-      <h1 className="text-2xl md:text-4xl font-bold mb-6 text-center text-gray-800">Nuwell Food Analyzer</h1>
+      <h1 className="text-2xl md:text-4xl font-bold mb-6 text-center text-gray-800">Nuwell Food Analyzer </h1>
 
       {!analysis && !loading && (
         <p className="text-base md:text-lg font-medium mb-6 p-5 rounded-xl shadow-inner text-gray-700 text-center">
@@ -61,7 +61,7 @@ export default function Home() {
             onClick={resetAnalysis}
             className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600"
           >
-            Capture Another Image
+            Capture Another Image  <CameraIcon className='inline'/>
           </Button>
         </div>
       )}
