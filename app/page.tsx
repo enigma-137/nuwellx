@@ -17,7 +17,7 @@ const Page = () => {
     <div className="flex flex-col gap-6 items-center justify-center min-h-screen bg-gray-100 p-8">
       <div className="text-center max-w-lg">
         <h1 className="text-3xl font-bold text-gray-900 mb-4">
-          NuWell Food Scanner <ScanSearchIcon />
+          NuWell Food Scanner 
         </h1>
         <p className='text-lg text-gray-700 mb-6'>
           Scan foods to get their nutritional composition and other information! Explore a world of healthier choices and stay informed.
@@ -26,7 +26,7 @@ const Page = () => {
           onClick={handleRedirect} 
           className="px-8 py-4 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-300"
         >
-          Get Started
+          Get Started <ScanSearchIcon  className='inline  ml-2'/>
         </Button>
       </div>
 
@@ -36,6 +36,7 @@ const Page = () => {
           alt="Food Scanner Illustration"
           className="rounded-lg shadow-lg"
           width={400}
+          priority
           height={400}
         />
       </div>
