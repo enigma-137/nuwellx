@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import Camera from '@/components/Camera'
 import Results from '@/components/Results'
 
+
 import axios from 'axios'
 import { CameraIcon, Loader } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -61,6 +62,7 @@ export default function Home() {
             onClick={resetAnalysis}
             className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600"
           >
+            
             Capture Another Image  <CameraIcon className='inline'/>
           </Button>
         </div>

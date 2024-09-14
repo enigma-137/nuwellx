@@ -11,7 +11,7 @@ interface CameraProps {
 
 export default function Camera({ onCapture }: CameraProps) {
   const webcamRef = useRef<Webcam>(null)
-  const [facingMode, setFacingMode] = useState('user') // 'user' for front camera, 'environment' for back camera
+  const [facingMode, setFacingMode] = useState('environment') // 'user' for front camera, 'environment' for back camera
 
   const capture = useCallback(() => {
     const imageSrc = webcamRef.current?.getScreenshot()
@@ -21,7 +21,7 @@ export default function Camera({ onCapture }: CameraProps) {
   }, [webcamRef, onCapture])
 
   const switchCamera = () => {
-    setFacingMode((prevMode) => (prevMode === 'user' ? 'environment' : 'user'))
+    setFacingMode((prevMode) => (prevMode === 'environment' ? 'user' : 'environment'))
   }
 
   return (

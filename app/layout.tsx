@@ -20,7 +20,6 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <head>
-          {/* Correctly include the manifest link */}
           <link rel="manifest" href="/manifest.json" />
         </head>
         <body>
