@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import ReactMarkdown from 'react-markdown'
-import { Bot, DessertIcon, Stethoscope } from 'lucide-react'
+import { Bot, DessertIcon, Send, Stethoscope } from 'lucide-react'
 
 interface Message {
   role: string
@@ -56,12 +56,15 @@ export default function DieticianPage() {
   }
 
   return (
-    <div className="flex flex-col h-screen max-w-2xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Nuwell Dietician <Bot className='inline'/> <Stethoscope className='inline'/></h1>
-      <div className="flex-1 overflow-y-auto mb-4 border rounded p-2">
+    <div className="flex flex-col min-h-screen max-w-full p-4 bg-gray-50 items-center justify-center">
+    <div className="w-full max-w-xl mx-auto bg-white rounded-lg shadow-lg p-6">
+      <h1 className="text-2xl font-bold mb-4 p-4 shadow-inner text-center">
+        Nuwell AI Dietician <Bot className="inline" /> <Stethoscope className="inline" />
+      </h1>
+      <div className="flex-1 overflow-y-auto mb-4 border border-gray-300 rounded-lg p-2 bg-gray-100 h-80">
         {messages.map((msg, index) => (
           <div key={index} className={`mb-2 ${msg.role === 'user' ? 'text-right' : 'text-left'}`}>
-            <span className={`inline-block p-2 rounded ${msg.role === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}>
+            <span className={`inline-block p-3 rounded-lg ${msg.role === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}>
               <ReactMarkdown>{msg.content}</ReactMarkdown>
             </span>
           </div>
@@ -72,18 +75,22 @@ export default function DieticianPage() {
           </div>
         )}
       </div>
-      <form onSubmit={sendMessage} className="flex">
+      <form onSubmit={sendMessage} className="flex items-center mt-4">
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          className="flex-1 p-2 border rounded-l"
+          className="flex-1 p-3 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
           placeholder="Ask about food recommendations..."
         />
-        <button type="submit" className="p-2 bg-blue-500 text-white rounded-r">
-          Send
+        <button
+          type="submit"
+          className="p-3 bg-blue-500 text-white rounded-r-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        >
+          <Send className="w-5 h-6" />
         </button>
       </form>
     </div>
+  </div>
   )
 }
