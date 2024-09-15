@@ -4,14 +4,27 @@ import React from 'react'
 import Link from 'next/link'
 import { User, MessageSquare, LogOut, LucideCookie, ScanFaceIcon } from 'lucide-react'
 import { Button } from "@/components/ui/button"
-import { SignOutButton, UserButton } from '@clerk/nextjs'
+import { SignOutButton, UserButton, useUser } from '@clerk/nextjs'
+
 
 interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
+
+
+
+
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {
+  
+const {user} = useUser();
+
+const {firstName, lastName, imageUrl} = user ||  {
+  firstName: '',
+  lastName: '',
+  imageUrl: '',
+} 
   return (
     <>
       {/* Overlay */}
@@ -31,32 +44,37 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
         <div className="flex flex-col h-full">
           <div className="p-4 border-b">
             <h2 className="text-xl font-semibold">Nuwell</h2>
+            
           </div>
           <nav className="flex-1 p-4">
-            <ul className="space-y-2">
-              <li>
-              <UserButton />
+            <ul className="space-y-2 ">
+              <li className='p-4 '>
+         <div className='flex gap-3'> <p className=' p-4'>  <UserButton  /> <span className='font-bold text-black text-xl ml-4'>{firstName}</span> </p></div>   
+              
+              <p className='text-blue-600 font-bold pt-3 text-sm'>My account</p>
               </li>
 
-              <li>
-                <Link href="/home" className="flex items-center p-2 gap-12 rounded shadow-lg font-medium hover:bg-gray-100">
-                Scan
+              <li className=''>
+                <Link href="/home" className="flex items-center p-2 gap-6 rounded shadow-lg font-medium hover:bg-gray-100">
+               
                   <ScanFaceIcon className="mr-2 ml-2 text-blue-600 " size={20} />
+                  <p> Scan</p>
                  
                 </Link>
               </li>
               <li>
-                <Link href="/dietician" className="flex items-center p-2 gap-12 rounded shadow-lg font-medium hover:bg-gray-100">
-                Dietician
+                <Link href="/dietician" className="flex items-center p-2 gap-6 rounded shadow-lg font-medium hover:bg-gray-100">
                   <MessageSquare className="mr-2 ml-2" size={20} />
+               <p>AI Dietician </p>
                  
                 </Link>
               </li>
               {/* o */}
-              <li>
-                <Link href="/scannedfoods" className="flex items-center p-2 gap-12 rounded shadow-lg font-medium hover:bg-gray-100">
-                My Foods
+              <li className=''>
+                <Link href="/scannedfoods" className="flex items-center p-2 gap-6 rounded shadow-lg font-medium hover:bg-gray-100">
+                
                   <LucideCookie className="mr-2 ml-2" size={20} />
+                  <p>My Foods </p>
                  
                 </Link>
               </li>

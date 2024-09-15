@@ -7,11 +7,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id            String         @id @map("_id") // Use Clerk's user ID as a String
+  email         String         @unique
+  name          String?
+  foodAnalyses  FoodAnalysis[]
+}
+
 model FoodAnalysis {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   analysis  String
   createdAt DateTime @default(now())
+  userId    String   // Store Clerk's user ID as a String
+  user      User     @relation(fields: [userId], references: [id])
 }
+
 
 model ChatMessage {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
@@ -19,3 +29,4 @@ model ChatMessage {
   content   String
   createdAt DateTime @default(now())
 }
+
