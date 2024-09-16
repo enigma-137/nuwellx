@@ -44,8 +44,8 @@ export default function FoodHistory() {
 
   if (!isLoaded || isLoading) {
     return <div className='h-screen items-center justify-center flex'> 
-    <span><Loader2 className='animate-spin'/></span>
-    Loading food history...</div>
+   
+    Loading food history  <span><Loader2 className='animate-spin ml-8 inline'/></span></div>
   }
 
   if (!isSignedIn) {

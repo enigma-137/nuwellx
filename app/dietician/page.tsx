@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import ReactMarkdown from 'react-markdown'
-import { Bot, DessertIcon, Send, Stethoscope } from 'lucide-react'
+import { Bot, MessageCircleMoreIcon, Send, Stethoscope } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
 interface Message {
   role: string
@@ -21,7 +22,7 @@ export default function DieticianPage() {
 
   const fetchChatHistory = async () => {
     try {
-      const response = await axios.get('/api/chat-history')
+      const response = await axios.get('/api/chathistory')
       setMessages(response.data.messages)
     } catch (error) {
       console.error('Error fetching chat history:', error)
@@ -55,6 +56,12 @@ export default function DieticianPage() {
     setIsLoading(false)
   }
 
+  const askAboutScannedFoods = async () => {
+    const question = "Can you tell me about the foods I've recently scanned and provide some dietary advice based on that?"
+    setInput(question)
+    await sendMessage({ preventDefault: () => {} } as React.FormEvent)
+  }
+
   return (
     <div className="flex flex-col min-h-screen max-w-full p-4 bg-gray-50 items-center justify-center">
     <div className="w-full max-w-xl mx-auto bg-white rounded-lg shadow-lg p-6">
@@ -70,8 +77,8 @@ export default function DieticianPage() {
           </div>
         ))}
         {isLoading && (
-          <div className="text-center">
-            Thinking<span className="animate-pulse">...</span>
+          <div className="text-start">
+            <span className="animate-pulse"><MessageCircleMoreIcon /> </span>
           </div>
         )}
       </div>
@@ -90,6 +97,9 @@ export default function DieticianPage() {
           <Send className="w-5 h-6" />
         </button>
       </form>
+      <Button onClick={askAboutScannedFoods} className="mt-2 w-full">
+          Ask About My Scanned Foods
+        </Button>
     </div>
   </div>
   )

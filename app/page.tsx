@@ -14,7 +14,7 @@ const Page = () => {
   }
 
   return (
-    <div className="flex flex-col gap-6 items-center justify-center min-h-screen bg-gray-100 p-8">
+    <div className="flex flex-col gap-6 items-center justify-center min-h-screen bg-gradient-to-b from-sky-50 to-white  p-8">
       <div className="text-center max-w-lg">
         <h1 className="text-3xl font-bold text-gray-900 mb-4">
           NuWell Food Scanner 

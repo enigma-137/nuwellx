@@ -1,36 +1,49 @@
 import { NextResponse } from 'next/server'
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { prisma } from '@/lib/prisma'
+import { auth } from '@clerk/nextjs/server';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
 export async function POST(request: Request) {
-  const { message, history } = await request.json()
-
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-
-    // Fetch the most recent food analysis
-    const recentAnalysis = await prisma.foodAnalysis.findFirst({
-      orderBy: { createdAt: 'desc' },
-    })
-
-    let initialPrompt = "You are an AI dietician. Provide helpful and accurate dietary advice. ";
-    if (recentAnalysis) {
-      initialPrompt += `Consider this previous food analysis when giving advice: ${recentAnalysis.analysis}`;
+    const { userId } = auth()
+    
+    if (!userId) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    // Format the chat history correctly for Gemini API
-    const formattedHistory = history.map((msg: { role: string; content: string }) => ({
-      role: msg.role === 'user' ? 'user' : 'model',
-      parts: [{ text: msg.content }],
-    }));
+    const { message, history } = await request.json()
+
+    // Fetch recent food scans
+    const recentFoodScans = await prisma.foodAnalysis.findMany({
+      where: { userId },
+      orderBy: { createdAt: 'desc' },
+      take: 5
+    })
+
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+
+    let initialPrompt = "You are an AI dietician. Provide helpful and accurate dietary advice. ";
+    
+    if (recentFoodScans.length > 0) {
+      initialPrompt += "Here are the user's recent food scans:\n";
+      recentFoodScans.forEach((scan, index) => {
+        initialPrompt += `Scan ${index + 1}: ${scan.analysis}\n`;
+      });
+      initialPrompt += "Please consider this information when providing advice.";
+    } else {
+      initialPrompt += "The user has no recent food scans.";
+    }
 
     const chat = model.startChat({
       history: [
         { role: 'user', parts: [{ text: initialPrompt }] },
-        { role: 'model', parts: [{ text: "Understood. I'll act as an AI dietician and provide helpful dietary advice based on the information available, including any previous food analysis." }] },
-        ...formattedHistory
+        { role: 'model', parts: [{ text: "Understood. I'll act as an AI dietician and provide helpful dietary advice based on the information available, including any recent food scans." }] },
+        ...history.map((msg: { role: string; content: string }) => ({
+          role: msg.role === 'user' ? 'user' : 'model',
+          parts: [{ text: msg.content }],
+        }))
       ],
       generationConfig: {
         maxOutputTokens: 1000,
@@ -45,6 +58,7 @@ export async function POST(request: Request) {
       data: {
         role: 'user',
         content: message,
+        userId: userId,
       },
     })
 
@@ -53,15 +67,13 @@ export async function POST(request: Request) {
       data: {
         role: 'assistant',
         content: assistantResponse,
+        userId: userId,
       },
     })
 
     return NextResponse.json({ reply: assistantResponse })
   } catch (error) {
     console.error('Error in chat:', error)
-    if (error instanceof Error) {
-      return NextResponse.json({ error: `Failed to get response: ${error.message}` }, { status: 500 })
-    }
-    return NextResponse.json({ error: 'An unknown error occurred' }, { status: 500 })
+    return NextResponse.json({ error: 'Failed to get response' }, { status: 500 })
   }
 }
