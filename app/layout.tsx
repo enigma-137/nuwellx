@@ -5,9 +5,15 @@ import './globals.css'
 import { Inter } from 'next/font/google'
 import { useState } from 'react'
 import { Menu } from 'lucide-react'
+// import type { Metadata } from 'next'
 import Sidebar from '@/components/SideBar'
 
 const inter = Inter({ subsets: ['latin'] })
+
+// export const metadata: Metadata = {
+//   title: "Track your Airdrops",
+//   description: "Track all the airdrops you farm",
+// };
 
 
 export default function RootLayout({

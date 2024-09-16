@@ -5,6 +5,8 @@ import axios from 'axios'
 import { useUser } from '@clerk/nextjs'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import ReactMarkdown from 'react-markdown'
+import { Loader2 } from 'lucide-react'
 
 interface FoodAnalysis {
   id: string
@@ -17,6 +19,7 @@ export default function FoodHistory() {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const { isLoaded, isSignedIn, user } = useUser()
+  const [expandedItems, setExpandedItems] = useState<{ [key: string]: boolean }>({})
 
   useEffect(() => {
     const fetchFoodHistory = async () => {
@@ -40,7 +43,9 @@ export default function FoodHistory() {
   }, [isLoaded, isSignedIn])
 
   if (!isLoaded || isLoading) {
-    return <div className='h-screen items-center justify-center flex'> Loading food history...</div>
+    return <div className='h-screen items-center justify-center flex'> 
+    <span><Loader2 className='animate-spin'/></span>
+    Loading food history...</div>
   }
 
   if (!isSignedIn) {
@@ -51,6 +56,20 @@ export default function FoodHistory() {
     return <div className="text-red-500">{error}</div>
   }
 
+  const truncateText = (text: string, length: number) => {
+    if (text.length <= length) return text
+    return text.slice(0, length) + '...'
+  }
+
+
+
+  const toggleExpand = (id: string) => {
+    setExpandedItems((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }))
+  }
+
   return (
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader>
@@ -59,14 +78,25 @@ export default function FoodHistory() {
       <CardContent>
         <ScrollArea className="h-[400px] w-full rounded-md border p-4">
           {foodHistory.length === 0 ? (
-            <p className='h-screen items-center justify-center flex'>No food scans available yet.</p>
+            <p className='h-fit items-center justify-center'>No food scans available yet.</p>
           ) : (
             foodHistory.map((food) => (
               <div key={food.id} className="mb-4 p-4 border rounded-lg">
                 <h3 className="font-semibold mb-2">
                   Scanned on: {new Date(food.createdAt).toLocaleString()}
                 </h3>
-                <p className="text-sm text-gray-600">{food.analysis}</p>
+                <p className="text-sm text-gray-600">
+                  {expandedItems[food.id] ? (
+                    <ReactMarkdown>{food.analysis}</ReactMarkdown>
+                  ) : (
+                    <ReactMarkdown>{truncateText(food.analysis, 100)}</ReactMarkdown>
+                  )}
+                </p>
+                <button 
+                  onClick={() => toggleExpand(food.id)} 
+                  className="text-blue-500 text-sm">
+                  {expandedItems[food.id] ? 'View Less' : 'View More'}
+                </button>
               </div>
             ))
           )}

@@ -12,10 +12,10 @@ export async function GET() {
 
     const foodAnalyses = await prisma.foodAnalysis.findMany({
       where: {
-        userId
+        userId: userId
       },
       orderBy: { createdAt: 'desc' },
-      take: 10
+      take: 5 // Fetch the last 5 scanned foods
     })
 
     return NextResponse.json({ foodAnalyses })
