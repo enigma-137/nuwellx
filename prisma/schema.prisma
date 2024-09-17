@@ -21,3 +21,16 @@ model ChatMessage {
   createdAt DateTime @default(now())
   userId    String
 }
+
+model Recipe {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  ingredients String[]
+  instructions String
+  prepTime    Int
+  cookTime    Int
+  servings    Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  userId String
+}

@@ -64,11 +64,11 @@ export default function DieticianPage() {
 
   return (
     <div className="flex flex-col min-h-screen max-w-full p-4 bg-gray-50 items-center justify-center">
-    <div className="w-full max-w-xl mx-auto bg-white rounded-lg shadow-lg p-6">
+    <div className="w-full max-w-xl mx-auto bg-white rounded-lg shadow-lg p-4">
       <h1 className="text-2xl font-bold mb-4 p-4 shadow-inner text-center">
         Nuwell AI Dietician <Bot className="inline" /> <Stethoscope className="inline" />
       </h1>
-      <div className="flex-1 overflow-y-auto mb-4 border border-gray-300 rounded-lg p-2 bg-gray-100 h-80">
+      <div className="flex-1 overflow-y-auto mb-4 border border-gray-300 rounded-lg p-2 bg-gray-100 h-[30rem]">
         {messages.map((msg, index) => (
           <div key={index} className={`mb-2 ${msg.role === 'user' ? 'text-right' : 'text-left'}`}>
             <span className={`inline-block p-3 rounded-lg ${msg.role === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}>
@@ -97,9 +97,9 @@ export default function DieticianPage() {
           <Send className="w-5 h-6" />
         </button>
       </form>
-      <Button onClick={askAboutScannedFoods} className="mt-2 w-full">
+      {/* <Button onClick={askAboutScannedFoods} className="mt-2 w-full">
           Ask About My Scanned Foods
-        </Button>
+        </Button> */}
     </div>
   </div>
   )
