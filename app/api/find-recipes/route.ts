@@ -21,7 +21,7 @@ export async function POST(request: Request) {
 
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" })
 
-    const prompt = `Given the following ingredients: ${ingredients.join(', ')}, suggest 3 recipes. For each recipe, provide the following information in a JSON array:
+    const prompt = `Given the following ingredients: ${ingredients.join(', ')}, suggest 3 traditional African recipes or dishes commonly prepared in Africa using local ingredients. The recipes should be well-known within African cuisine. For each recipe, provide the following information in a JSON array:
     [
       {
         "name": "Recipe Name",
@@ -32,7 +32,8 @@ export async function POST(request: Request) {
         "servings": number of servings
       }
     ]
-    Ensure that the output is a valid JSON array containing exactly 3 recipe objects. Do not include any additional text, markdown formatting, or code blocks in your response.`
+    Ensure that the output is a valid JSON array containing exactly 3 traditional African recipe objects. Do not include any additional text, markdown formatting, or code blocks in your response. Avoid suggesting recipes that are not commonly known in Africa.`;
+
 
     const result = await model.generateContent(prompt)
     let recipesString = result.response.text()
