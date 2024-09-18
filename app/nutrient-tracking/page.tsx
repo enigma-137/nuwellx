@@ -211,7 +211,7 @@ export default function NutritionTracker() {
 
       <Card>
         <CardHeader>
-          <CardTitle>AI Nutrition Suggestions</CardTitle>
+          <CardTitle>Nutrition Suggestions</CardTitle>
         </CardHeader>
         <CardContent>
           {suggestions.length > 0 ? (
