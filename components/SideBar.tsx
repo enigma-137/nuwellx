@@ -2,7 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { User, MessageSquare, LogOut, LucideCookie, ScanFaceIcon, Info, CookingPot } from 'lucide-react'
+import { User, MessageSquare, LogOut, LucideCookie, ScanFaceIcon, Info, CookingPot, ChevronLeftSquareIcon, ChevronLeft, XIcon } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { SignOutButton, UserButton, useUser } from '@clerk/nextjs'
 
@@ -41,8 +41,14 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
           }`}
       >
         <div className="flex flex-col h-full">
+
+
           <div className="p-4 border-b">
+            <p className='flex items-end justify-end'><XIcon onClick={onClose}></XIcon></p>
+
             <h2 className="text-xl font-semibold">Nuwell</h2>
+
+
 
           </div>
           <nav className="flex-1 p-4">
