@@ -32,16 +32,16 @@ export async function POST(request: Request) {
         "servings": number of servings
       }
     ]
-    Ensure that the output is a valid JSON array containing exactly 3 traditional African recipe objects. Do not include any additional text, markdown formatting, or code blocks in your response. Avoid suggesting recipes that are not commonly known in Africa.`;
+    Ensure that the output is a valid JSON array containing exactly 3 traditional African recipe objects. Do not include any additional text, markdown formatting, or code blocks in your response. Avoid suggesting recipes that are not commonly known in Africa, Avoid suggesting recipes that are not related to the provided ingredients.`;
 
 
     const result = await model.generateContent(prompt)
     let recipesString = result.response.text()
 
-    console.log('AI Response:', recipesString) // Log the AI's response for debugging
+    //console.log('AI Response:', recipesString) // Log the AI's response for debugging
 
     // Remove any potential backticks or code block formatting
-    recipesString = recipesString.replace(/```json\n?|\n?```/g, '').trim()
+    recipesString = recipesString.replace(/```json\n?|\n?```/g, '').trim()  //Imagine how I struggled to fix this if not for AI 
 
     let recipes
     try {
