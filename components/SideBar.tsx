@@ -2,7 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { User, MessageSquare, LogOut, LucideCookie, ScanFaceIcon, Info, CookingPot, ChevronLeftSquareIcon, ChevronLeft, XIcon } from 'lucide-react'
+import { User, MessageSquare, LogOut, LucideCookie, ScanFaceIcon, Info, CookingPot, ChevronLeftSquareIcon, ChevronLeft, XIcon, Flame, BarChartBig } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { SignOutButton, UserButton, useUser } from '@clerk/nextjs'
 
@@ -93,6 +93,15 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
 
                   <CookingPot className="mr-2 ml-2" size={20} />
                   <p>Find Recipes </p>
+
+                </Link>
+              </li>
+
+              <li className='m'>
+                <Link href="/recipe-finder" className="flex items-center p-2 gap-6 rounded shadow-sm  hover:bg-gray-100">
+
+                  <BarChartBig className="mr-2 ml-2" size={20} />
+                  <p>Track Nutrient <Flame className='inline ' fill='orange'/> </p>
 
                 </Link>
               </li>
