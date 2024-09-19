@@ -25,7 +25,11 @@ export default function RootLayout({
   return (
     <ClerkProvider>
      <html lang="en">
-      <body className={poppins.className}>{children}</body>
+      <body className={poppins.className}>
+      <head>
+      <link rel="manifest" href="/manifest.json" />
+      </head>
+        {children}</body>
     </html>
     </ClerkProvider>
    
