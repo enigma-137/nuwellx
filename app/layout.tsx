@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   title: 'Nuwell',
   description: 'Food and nutrition app',
   icons: {
-    icon: '/favicon.ico', // Path to the favicon
+    icon: '/favicon.ico', 
   },
 }
 
