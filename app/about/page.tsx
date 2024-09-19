@@ -34,32 +34,7 @@ export default function AboutUs() {
             </CardContent>
           </Card>
         </div>
-        
-        {/* <div className="mt-16">
-          <h2 className="text-3xl font-bold text-center text-sky-800 mb-8">Our Team</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              { name: "Jane Doe", role: "Founder & CEO", image: "/placeholder.svg?height=200&width=200" },
-              { name: "John Smith", role: "Lead Developer", image: "/placeholder.svg?height=200&width=200" },
-              { name: "Emily Brown", role: "Nutrition Specialist", image: "/placeholder.svg?height=200&width=200" },
-            ].map((member, index) => (
-              <Card key={index} className="bg-white shadow-lg overflow-hidden">
-                <div className="relative h-48">
-                  <Image
-                    src={member.image}
-                    alt={member.name}
-                    layout="fill"
-                    objectFit="cover"
-                  />
-                </div>
-                <CardContent className="p-4">
-                  <h3 className="text-lg font-semibold text-sky-700">{member.name}</h3>
-                  <p className="text-gray-600">{member.role}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div> */}
+     
       </div> 
     </div>
   )

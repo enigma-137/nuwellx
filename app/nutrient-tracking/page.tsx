@@ -112,7 +112,7 @@ export default function NutritionTracker() {
   }
 
   if (!isLoaded || !isSignedIn) {
-    return <div>Please sign in to track your nutrition.</div>
+    return <div className='min-h-screen flex items-center justify-center'>Please wait while we check your auth status....</div>
   }
 
   return (

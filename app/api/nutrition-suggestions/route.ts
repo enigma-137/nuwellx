@@ -64,7 +64,9 @@ export async function GET() {
     ]`
 
     const result = await model.generateContent(prompt)
-    const suggestionsString = result.response.text()
+    let suggestionsString = result.response.text()
+
+    suggestionsString = suggestionsString.replace(/```json\n?|\n?```/g, "").trim();
 
     let suggestions
     try {
