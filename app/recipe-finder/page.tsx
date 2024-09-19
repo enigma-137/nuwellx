@@ -18,6 +18,10 @@ interface Recipe {
   prepTime: number
   cookTime: number
   servings: number
+  calories: number
+  protein: number
+  carbs: number
+  fat: number
 }
 
 export default function Component() {
@@ -121,6 +125,29 @@ export default function Component() {
       setIsLoading(false)
     }
   }
+
+  const addToTracker = async (recipe: Recipe) => {
+    try {
+      await axios.post('/api/nutrition-entries', {
+        food: recipe.name,
+        calories: recipe.calories,
+        protein: recipe.protein,
+        carbs: recipe.carbs,
+        fat: recipe.fat
+      })
+      toast({
+        title: "Recipe Added",
+        description: `${recipe.name} has been added to your nutrition tracker.`,
+      })
+    } catch (error) {
+      console.error('Error adding recipe to tracker:', error)
+      toast({
+        title: "Error",
+        description: "Failed to add recipe to tracker. Please try again.",
+        variant: "destructive",
+      })
+    }
+  }
   return (
     <ToastProvider>
       <div className="container mx-auto p-4">
@@ -185,7 +212,11 @@ export default function Component() {
                     <li key={index} className="text-sm">
                       {ingredient}
                     </li>
+                    
                   ))}
+                  <li>
+                  <Button onClick={() => addToTracker(recipe)}>Add to Tracker</Button>
+                  </li>
                 </ul>
                 <h3 className="font-semibold mb-1">Instructions:</h3>
                 <p className="text-sm">{recipe.instructions}</p>
@@ -193,8 +224,13 @@ export default function Component() {
             </Card>
           ))}
         </div>
+
+        
       </div>
       <ToastViewport />
     </ToastProvider>
   )
 }
+
+
+

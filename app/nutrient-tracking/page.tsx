@@ -4,10 +4,12 @@ import React, { useState, useEffect } from 'react'
 import { useUser } from '@clerk/nextjs'
 import axios from 'axios'
 import { Button } from "@/components/ui/button"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useToast } from "@/hooks/use-toast"
 import { Loader2 } from "lucide-react"
+import { NutritionChart } from '@/components/Chart'
 
 interface NutritionEntry {
   id: string
@@ -30,6 +32,7 @@ export default function NutritionTracker() {
   const [suggestions, setSuggestions] = useState<NutritionSuggestion[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const { isLoaded, isSignedIn, user } = useUser()
+  const [viewMode, setViewMode] = useState<'daily' | 'weekly' | 'monthly'>('daily')
   const { toast } = useToast()
 
   useEffect(() => {
@@ -57,6 +60,13 @@ export default function NutritionTracker() {
       setIsLoading(false)
     }
   }
+
+  useEffect(() => {
+    if (isLoaded && isSignedIn) {
+      fetchEntries()
+    }
+  }, [isLoaded, isSignedIn, viewMode])
+
 
   const fetchSuggestions = async () => {
     try {
@@ -107,6 +117,22 @@ export default function NutritionTracker() {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6">Nutrition Tracker</h1>
+
+
+      {/* Huh */}
+      <div className="mb-4">
+        <Select value={viewMode} onValueChange={(value: 'daily' | 'weekly' | 'monthly') => setViewMode(value)}>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Select view" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="daily">Daily View</SelectItem>
+            <SelectItem value="weekly">Weekly View</SelectItem>
+            <SelectItem value="monthly">Monthly View</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+      {/*  */}
       
       <Card className="mb-6">
         <CardHeader>
@@ -228,6 +254,17 @@ export default function NutritionTracker() {
           )}
         </CardContent>
       </Card>
+
+      {/* chart */}
+
+      <Card className="mt-6">
+      <CardHeader>
+        <CardTitle>Nutrition Intake Over Time</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <NutritionChart entries={entries} />
+      </CardContent>
+    </Card>
     </div>
   )
 }

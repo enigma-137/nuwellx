@@ -1,51 +1,33 @@
-"use client"
-
-import { ClerkProvider } from '@clerk/nextjs'
+import type { Metadata } from 'next'
+import { Poppins } from 'next/font/google'
 import './globals.css'
-import { Inter } from 'next/font/google'
-import { useState } from 'react'
-import { Menu } from 'lucide-react'
-// import type { Metadata } from 'next'
-import Sidebar from '@/components/SideBar'
+import { ClerkProvider } from '@clerk/nextjs'
 
-const inter = Inter({ subsets: ['latin'] })
+const poppins = Poppins({ 
+  subsets: ['latin'],
+  weight: ['400', "500", "600", "700"],
+  variable: '--font-poppins'
+})
 
-// export const metadata: Metadata = {
-//   title: "Track your Airdrops",
-//   description: "Track all the airdrops you farm",
-// };
-
+export const metadata: Metadata = {
+  title: 'Nuwell',
+  description: 'Food and nutrition app',
+  icons: {
+    icon: '/favicon.ico', // Path to the favicon
+  },
+}
 
 export default function RootLayout({
-  
-
   children,
 }: {
   children: React.ReactNode
 }) {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   return (
     <ClerkProvider>
-      <html lang="en">
-        <head>
-          <link rel="manifest" href="/manifest.json" />
-        </head>
-        <body className={inter.className}>
-        <div className="bg-gradient-to-b from-sky-50 to-white ">
-          <div className="container mx-auto   flex justify-between items-center">
-            <button
-              onClick={() => setIsSidebarOpen(true)}
-              className="text-black bg-white w shadow-lg rounded-full p-4"
-              aria-label="Open menu"
-            >
-              <Menu size={24} />
-            </button>
-          </div>
-        </div>
-        <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
-          {children}
-        </body>
-      </html>
+     <html lang="en">
+      <body className={poppins.className}>{children}</body>
+    </html>
     </ClerkProvider>
+   
   )
 }

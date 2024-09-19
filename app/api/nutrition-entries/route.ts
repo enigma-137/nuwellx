@@ -2,22 +2,30 @@ import { NextResponse } from 'next/server'
 import { auth } from '@clerk/nextjs/server'
 import { prisma } from '@/lib/prisma'
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
     const { userId } = auth()
-    
     if (!userId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const today = new Date()
-    today.setHours(0, 0, 0, 0)
+    const { searchParams } = new URL(request.url)
+    const view = searchParams.get('view') || 'daily'
+
+    let startDate = new Date()
+    startDate.setHours(0, 0, 0, 0)
+
+    if (view === 'weekly') {
+      startDate.setDate(startDate.getDate() - 7)
+    } else if (view === 'monthly') {
+      startDate.setMonth(startDate.getMonth() - 1)
+    }
 
     const entries = await prisma.nutritionEntry.findMany({
       where: {
         userId: userId,
         date: {
-          gte: today
+          gte: startDate
         }
       },
       orderBy: {
@@ -31,6 +39,8 @@ export async function GET() {
     return NextResponse.json({ error: 'Failed to fetch nutrition entries' }, { status: 500 })
   }
 }
+
+
 
 export async function POST(request: Request) {
   try {

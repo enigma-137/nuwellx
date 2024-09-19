@@ -46,3 +46,14 @@ model NutritionEntry {
   date      DateTime
   createdAt DateTime @default(now())
 }
+
+model NutritionGoal {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String @unique
+  calories  Int
+  protein   Float
+  carbs     Float
+  fat       Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
