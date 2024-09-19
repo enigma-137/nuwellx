@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useToast } from "@/hooks/use-toast"
 import { Loader2 } from "lucide-react"
 import { NutritionChart } from '@/components/Chart'
+import { CalorieCalculator } from '@/components/CalorieCalulator'
 
 interface NutritionEntry {
   id: string
@@ -208,6 +209,10 @@ export default function NutritionTracker() {
               Add Entry
             </Button>
           </form>
+
+          <div className="mt-4">
+            <CalorieCalculator />
+          </div>
         </CardContent>
       </Card>
 
