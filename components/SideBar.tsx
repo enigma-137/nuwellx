@@ -98,7 +98,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
               </li>
 
               <li className='m'>
-                <Link href="/recipe-finder" className="flex items-center p-2 gap-6 rounded shadow-sm  hover:bg-gray-100">
+                <Link href="/nutrient-tracking" className="flex items-center p-2 gap-6 rounded shadow-sm  hover:bg-gray-100">
 
                   <BarChartBig className="mr-2 ml-2" size={20} />
                   <p>Track Nutrient <Flame className='inline ' fill='orange'/> </p>
