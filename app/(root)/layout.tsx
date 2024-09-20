@@ -5,6 +5,7 @@ import { Inter } from 'next/font/google'
 import { useState } from 'react'
 import { Menu } from 'lucide-react'
 import Sidebar from '@/components/SideBar'
+import { ReminderModal } from '@/components/ReminderModal'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -34,6 +35,7 @@ export default function RootLayout({
         </div>
         <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
           {children}
+          <ReminderModal />
         </body>
       </html>
 

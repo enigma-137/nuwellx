@@ -3,6 +3,7 @@ import { Poppins } from 'next/font/google'
 import './globals.css'
 import { ClerkProvider } from '@clerk/nextjs'
 
+
 const poppins = Poppins({ 
   subsets: ['latin'],
   weight: ['400', "500", "600", "700"],
@@ -29,7 +30,9 @@ export default function RootLayout({
       <head>
       <link rel="manifest" href="/manifest.json" />
       </head>
-        {children}</body>
+        {children}
+    
+        </body>
     </html>
     </ClerkProvider>
    

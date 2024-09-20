@@ -152,8 +152,9 @@ export default function Component() {
     <ToastProvider>
       <div className="container mx-auto p-4">
         <h1 className="text-3xl font-bold mb-6 text-center">Recipe Finder</h1>
+        <p className='text-sm text-center'>Got Ingredients but you don't know what to eat? upload of a photo of them or enter them to get recipes'</p>
         
-        <div className="mb-6">
+        <div className="mb-6 mt-6">
           <h2 className="text-xl mb-2 font-semibold">Upload Image of Ingredients</h2>
           <Input 
             type="file" 
