@@ -1,22 +1,12 @@
-  import nextPwa from "next-pwa";
+import withSerwistInit from "@serwist/next";
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-	
-};
-const isDev = process.env.NODE_ENV !== "production";
-
-const withPWA = nextPwa({
-	dest: "public",
-	register: true,
-	skipWaiting: true,
-	disable: isDev, // will be true in development mode
-	buildExcludes: [/middleware-manifest\.json$/] // Optional: To prevent errors with middleware
-  });
-  
-
-const config = withPWA({
-	...nextConfig,
+const withSerwist = withSerwistInit({
+  // Note: This is only an example. If you use Pages Router,
+  // use something else that works, such as "service-worker/index.ts".
+  swSrc: "app/sw.ts",
+  swDest: "public/sw.js",
 });
 
-export default config;
+export default withSerwist({
+  // Your Next.js config
+});

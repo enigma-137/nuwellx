@@ -37,7 +37,7 @@ export function ReminderModal() {
   const handleClose = () => {
     setIsOpen(false)
     if (dontShowAgain) {
-      fetch('/api/user-preferences', {
+      fetch('/api/user-preference', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ hasSeenAIReminder: true }),
@@ -50,7 +50,7 @@ export function ReminderModal() {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className='bg-white'>
+      <DialogContent className='bg-white p-2'>
         <DialogHeader>
           <DialogTitle className='p-3'>Important Reminder <InfoIcon className='inline'/>  </DialogTitle>
           <DialogDescription>

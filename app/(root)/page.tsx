@@ -26,7 +26,7 @@ const Page = () => {
           onClick={handleRedirect} 
           className="px-8 py-4 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-300"
         >
-          Get Started <ScanSearchIcon  className='inline  ml-2'/>
+          Scan Food <ScanSearchIcon  className='inline  ml-2'/>
         </Button>
       </div>
 

@@ -18,9 +18,6 @@ export default function RootLayout({
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   return (
       <html lang="en">
-        <head>
-          <link rel="manifest" href="/manifest.json" />
-        </head>
         <body className={inter.className}>
         <div className="bg-gradient-to-b from-sky-50 to-white ">
           <div className="container mx-auto   flex justify-between items-center">

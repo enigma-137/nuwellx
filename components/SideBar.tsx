@@ -27,104 +27,67 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   }
   return (
     <>
-      {/* Overlay */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40"
-          onClick={onClose}
-        />
-      )}
-
-      {/* Sidebar */}
+    {isOpen && (
       <div
-        className={`fixed top-0 left-0 bottom-0 w-64 bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'
-          }`}
-      >
-        <div className="flex flex-col h-full">
-
-
-          <div className="p-4 border-b">
-            <p className='flex items-end justify-end'><XIcon onClick={onClose}></XIcon></p>
-
-            <h2 className="text-xl font-semibold">Nuwell</h2>
-
-
-
-          </div>
-          <nav className="flex-1 p-4">
-            <ul className="space-y-2 ">
-              <li className='p-4 '>
-                <div className='flex gap-3'>
-
-                  <div className=' p-4'>  <UserButton /> <span className='font-medium text-black  ml-4'>{firstName}</span>
-                    <p className='text-blue-600 font-medium pt-3 text-sm'>My account  </p>
-                  </div>
+        className="fixed inset-0 bg-black bg-opacity-50 z-40"
+        onClick={onClose}
+      />
+    )}
+  
+    {/* Sidebar */}
+    <div
+      className={`fixed top-0 left-0 bottom-0 w-64 bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+    >
+      <div className="flex flex-col h-full">
+        <div className="p-4 border-b">
+          <p className='flex items-end justify-end'>
+            <XIcon onClick={onClose} />
+          </p>
+          <h2 className="text-xl font-semibold">Nuwell</h2>
+        </div>
+  
+        <nav className="flex-1 p-4">
+          <ul className="space-y-2">
+            <li className='p-4'>
+              <div className='flex gap-3'>
+                <div className=' p-4'>
+                  <UserButton />
+                  <span className='font-medium text-black  ml-4'>{firstName}</span>
+                  <p className='text-blue-600 font-medium pt-3 text-sm'>My account</p>
                 </div>
-
-
-              </li>
-
-              <li className=''>
-                <Link href="/home" className="flex items-center p-2 gap-6 rounded shadow-sm  hover:bg-gray-100">
-
-                  <ScanFaceIcon className="mr-2 ml-2 " size={20} />
-                  <p> Scan</p>
-
+              </div>
+            </li>
+  
+            {[
+              { path: "/", label: "Scan", icon: ScanFaceIcon },
+              { path: "/dietician", label: "AI Dietician", icon: MessageSquare },
+              { path: "/scannedfoods", label: "My Foods", icon: LucideCookie },
+              { path: "/recipe-finder", label: "Find Recipes", icon: CookingPot },
+              { path: "/nutrient-tracking", label: "Track Nutrient", icon: BarChartBig, extraIcon: <Flame fill="orange"  className='inline'/> },
+              { path: "/about", label: "About", icon: Info },
+            ].map(({ path, label, icon: Icon, extraIcon }) => (
+              <li key={path}>
+                <Link href={path} className="flex items-center p-2 gap-6 rounded shadow-sm hover:bg-gray-100" onClick={onClose}>
+                  <Icon className="mr-2 ml-2 " size={20} />
+                  <p>
+                    {label} {extraIcon && extraIcon}
+                  </p>
                 </Link>
               </li>
-              <li>
-                <Link href="/dietician" className="flex items-center p-2 gap-6 rounded shadow-sm hover:bg-gray-100">
-                  <MessageSquare className="mr-2 ml-2" size={20} />
-                  <p>AI Dietician </p>
-
-                </Link>
-              </li>
-              {/* o */}
-              <li className=''>
-                <Link href="/scannedfoods" className="flex items-center p-2 gap-6 rounded shadow-sm  hover:bg-gray-100">
-
-                  <LucideCookie className="mr-2 ml-2" size={20} />
-                  <p>My Foods </p>
-
-                </Link>
-              </li>
-              <li className=''>
-                <Link href="/recipe-finder" className="flex items-center p-2 gap-6 rounded shadow-sm  hover:bg-gray-100">
-
-                  <CookingPot className="mr-2 ml-2" size={20} />
-                  <p>Find Recipes </p>
-
-                </Link>
-              </li>
-
-              <li className='m'>
-                <Link href="/nutrient-tracking" className="flex items-center p-2 gap-6 rounded shadow-sm  hover:bg-gray-100">
-
-                  <BarChartBig className="mr-2 ml-2" size={20} />
-                  <p>Track Nutrient <Flame className='inline ' fill='orange'/> </p>
-
-                </Link>
-              </li>
-
-              <li className=''>
-                <Link href="/about" className="flex items-center p-2 gap-6 rounded shadow-sm hover:bg-gray-100">
-
-                  <Info className="mr-2 ml-2" size={20} />
-                  <p>About </p>
-
-                </Link>
-              </li>
-            </ul>
-          </nav>
-          <div className="p-4 border-t">
-            <Button variant="outline">
-              <LogOut className="mr-2 ml-2" size={20} />
-              <SignOutButton />
-
-            </Button>
-          </div>
+            ))}
+          </ul>
+        </nav>
+  
+        <div className="p-4 border-t">
+          <Button variant="outline" onClick={onClose}>
+            <LogOut className="mr-2 ml-2" size={20} />
+            <SignOutButton />
+          </Button>
         </div>
       </div>
-    </>
+    </div>
+  </>
+  
   )
 }

@@ -3,10 +3,12 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useUser } from '@clerk/nextjs'
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import ReactMarkdown from 'react-markdown'
-import { Loader2 } from 'lucide-react'
+import { Loader2, Camera } from 'lucide-react'
+import { Button } from "@/components/ui/button"
+import Link from 'next/link'
 
 interface FoodAnalysis {
   id: string
@@ -43,13 +45,15 @@ export default function FoodHistory() {
   }, [isLoaded, isSignedIn])
 
   if (!isLoaded || isLoading) {
-    return <div className='h-screen items-center justify-center flex'> 
-   
-    Loading food history  <span><Loader2 className='animate-spin ml-8 inline'/></span></div>
+    return (
+      <div className='h-screen flex items-center justify-center'> 
+        Loading food history <Loader2 className='animate-spin ml-2'/>
+      </div>
+    )
   }
 
   if (!isSignedIn) {
-    return <div className='h-screen items-center justify-center flex'>Please sign in to view your food history.</div>
+    return <div className='h-screen flex items-center justify-center'>Please sign in to view your food history.</div>
   }
 
   if (error) {
@@ -61,8 +65,6 @@ export default function FoodHistory() {
     return text.slice(0, length) + '...'
   }
 
-
-
   const toggleExpand = (id: string) => {
     setExpandedItems((prev) => ({
       ...prev,
@@ -73,12 +75,21 @@ export default function FoodHistory() {
   return (
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader>
-        <CardTitle>Your Food History</CardTitle>
+        <CardTitle>Your Scanned Food</CardTitle>
+        <CardDescription>View and analyze your past food scans</CardDescription>
       </CardHeader>
       <CardContent>
         <ScrollArea className="h-[400px] w-full rounded-md border p-4">
           {foodHistory.length === 0 ? (
-            <p className='h-fit items-center justify-center'>No food scans available yet.</p>
+            <div className="text-center">
+              <p className='mb-4'>No food scans available yet.</p>
+              <p className='mb-4'>Start by scanning a food item to build your history!</p>
+              <Link href="/scan">
+                <Button>
+                  <Camera className="mr-2 h-4 w-4" /> Scan Food
+                </Button>
+              </Link>
+            </div>
           ) : (
             foodHistory.map((food) => (
               <div key={food.id} className="mb-4 p-4 border rounded-lg">
@@ -94,7 +105,7 @@ export default function FoodHistory() {
                 </p>
                 <button 
                   onClick={() => toggleExpand(food.id)} 
-                  className="text-blue-500 text-sm">
+                  className="text-blue-500 text-sm mt-2">
                   {expandedItems[food.id] ? 'View Less' : 'View More'}
                 </button>
               </div>
