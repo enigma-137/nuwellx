@@ -63,7 +63,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
               { path: "/", label: "Scan", icon: ScanFaceIcon },
               { path: "/dietician", label: "AI Dietician", icon: MessageSquare },
               { path: "/scannedfoods", label: "My Foods", icon: LucideCookie },
-              { path: "/recipe-finder", label: "Find Recipes", icon: CookingPot },
+              { path: "/food-finder", label: "Find Recipes", icon: CookingPot },
               { path: "/nutrient-tracking", label: "Track Nutrient", icon: BarChartBig, extraIcon: <Flame fill="orange"  className='inline'/> },
               { path: "/about", label: "About", icon: Info },
             ].map(({ path, label, icon: Icon, extraIcon }) => (
