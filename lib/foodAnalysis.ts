@@ -60,26 +60,47 @@ Preparation:
     const response = result.response;
     const text = response.text();
 
-    // Parse the response
-    const nameMatch = text.match(/Name: (.+)/);
-    const ingredientsMatch = text.match(/Ingredients:\n((?:- .+\n)+)/);
-    const preparationMatch = text.match(/Preparation:\n((?:\d+\. .+\n)+)/);
+    console.log("AI Response:", text); // Log the full AI response for debugging
 
-    if (!nameMatch || !ingredientsMatch || !preparationMatch) {
-      throw new Error("Failed to parse AI response");
+    // More flexible parsing
+    let name = '', ingredients: string[] = [], preparationProcess: string[] = [];
+
+    // Extract name
+    const nameMatch = text.match(/Name:\s*(.+)/);
+    if (nameMatch) {
+      name = nameMatch[1].trim();
     }
 
-    const name = nameMatch[1].trim();
-    const ingredients = ingredientsMatch[1].split('\n').filter(i => i.trim()).map(i => i.replace('- ', '').trim());
-    const preparationProcess = preparationMatch[1].split('\n').filter(p => p.trim()).map(p => p.replace(/^\d+\. /, '').trim());
+    // Extract ingredients
+    const ingredientsMatch = text.match(/Ingredients:([\s\S]*?)(?=Preparation:|$)/);
+    if (ingredientsMatch) {
+      ingredients = ingredientsMatch[1].split('\n')
+        .map(i => i.replace(/^-?\s*/, '').trim())
+        .filter(Boolean);
+    }
+
+    // Extract preparation steps
+    const preparationMatch = text.match(/Preparation:([\s\S]*?)$/);
+    if (preparationMatch) {
+      preparationProcess = preparationMatch[1].split('\n')
+        .map(p => p.replace(/^\d+\.?\s*/, '').trim())
+        .filter(Boolean);
+    }
+
+    console.log("Parsed result:", { name, ingredients, preparationProcess });
+
+    if (!name && ingredients.length === 0 && preparationProcess.length === 0) {
+      throw new Error("No usable information found in AI response");
+    }
 
     return {
-      name,
-      ingredients,
-      preparationProcess,
+      name: name || "Unknown dish",
+      ingredients: ingredients.length > 0 ? ingredients : ["No ingredients provided"],
+      preparationProcess: preparationProcess.length > 0 ? preparationProcess : ["No preparation steps provided"],
     };
   } catch (error) {
-    console.error('Error analyzing food:', error);
-    throw new Error('Failed to analyze food');
+    console.error('Error in analyzeFood:', error);
+    console.error('Input type:', typeof input === 'string' ? 'text' : 'file');
+    throw new Error('Failed to analyze food: ' + (error instanceof Error ? error.message : String(error)));
   }
 }

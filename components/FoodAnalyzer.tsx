@@ -55,7 +55,10 @@ export function FoodAnalyzer() {
       setIsLoading(true)
       const foodName = inputRef.current.value.trim()
       try {
-        const response = await axios.post('/api/analyze-food', { foodName })
+        const response = await axios.post('/api/analyze-food', 
+          { foodName },
+          { headers: { 'Content-Type': 'application/json' } }
+        )
         setFoodAnalysis(response.data.foodAnalysis)
         toast({
           title: "Food Analyzed",

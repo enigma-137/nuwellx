@@ -11,7 +11,7 @@ export default function FoodFinder() {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6 text-center">Food Finder</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center">Food & Recipe Finder</h1>
       
       <div className="flex justify-center mb-6">
         <Button
