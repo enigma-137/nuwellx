@@ -43,7 +43,8 @@
     "svix": "^1.15.0",
     "tailwind-merge": "^2.2.0",
     "tailwindcss-animate": "^1.0.7",
-    "uploadthing": "^6.1.0"
+    "uploadthing": "^6.1.0",
+    "workbox-precaching": "^7.1.0"
   },
   "devDependencies": {
     "@serwist/next": "^9.0.8",
