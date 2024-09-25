@@ -64,42 +64,48 @@ export default function DieticianPage() {
 
   return (
     <div className="flex flex-col h-screen w-full p-1 bg-gray-50">
-  <div className="w-full h-full mx-auto bg-white rounded-none md:rounded-lg shadow-lg p-1 max-w-full md:max-w-xl">
-    <h1 className="text-2xl font-bold mb-4 pt-4 shadow-inner text-center">
-      Nuwell AI Dietician <Bot className="inline" /> <Stethoscope className="inline" />
-    </h1>
-    <div className="flex-1 overflow-y-auto border border-gray-300 rounded-none md:rounded-lg p-1 bg-gray-100 max-h-[80vh]">
-      {messages.map((msg, index) => (
-        <div key={index} className={`mb-2 ${msg.role === 'user' ? 'text-right' : 'text-left'}`}>
-          <span className={`inline-block p-3 rounded-lg ${msg.role === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}>
-            <ReactMarkdown>{msg.content}</ReactMarkdown>
-          </span>
-        </div>
-      ))}
-      {isLoading && (
-        <div className="text-start">
-          <span className="animate-pulse"><MessageCircleMoreIcon /></span>
-        </div>
-      )}
+    <div className="w-full h-full mx-auto bg-white rounded-none md:rounded-lg shadow-lg p-1 max-w-full md:max-w-xl">
+      <h1 className="text-2xl font-bold mb-4 pt-4 shadow-inner text-center">
+        Nuwell AI Dietician <Bot className="inline" /> <Stethoscope className="inline" />
+      </h1>
+      <div className="flex-1 overflow-y-auto border border-gray-300 rounded-none md:rounded-lg p-1 bg-gray-100 max-h-[80vh] min-h-[80vh]"> 
+        {messages.length === 0 ? (
+          <div className="flex items-center  justify-center h-full text-gray-400">
+           <p className='pt-8 items-center flex justify-center'>No messages yet</p> 
+          </div>
+        ) : (
+          messages.map((msg, index) => (
+            <div key={index} className={`mb-2 ${msg.role === 'user' ? 'text-right' : 'text-left'}`}>
+              <span className={`inline-block p-3 rounded-lg ${msg.role === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}>
+                <ReactMarkdown>{msg.content}</ReactMarkdown>
+              </span>
+            </div>
+          ))
+        )}
+        {isLoading && (
+          <div className="text-start">
+            <span className="animate-pulse"><MessageCircleMoreIcon /></span>
+          </div>
+        )}
+      </div>
+      {/* Input form container with sticky positioning */}
+      <form onSubmit={sendMessage} className="flex items-center mt-4 sticky bottom-0 bg-white p-1">
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          className="flex-1 p-3 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+          placeholder="Ask about food recommendations..."
+        />
+        <button
+          type="submit"
+          className="p-3 text-sky-600 rounded-r-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+        >
+          <Send className="w-8 h-6 text-sky-600" fill='skyblue' />
+        </button>
+      </form>
     </div>
-    {/* Input form container with sticky positioning */}
-    <form onSubmit={sendMessage} className="flex items-center mt-4 sticky bottom-0 bg-white p-1">
-      <input
-        type="text"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        className="flex-1 p-3 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-        placeholder="Ask about food recommendations..."
-      />
-      <button
-        type="submit"
-        className="p-3 text-sky-600 rounded-r-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-      >
-        <Send className="w-8 h-6 text-sky-600" fill='skyblue' />
-      </button>
-    </form>
-  </div>
-</div>
+  </div>  
 
   
   )
