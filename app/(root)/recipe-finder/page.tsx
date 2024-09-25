@@ -24,7 +24,7 @@ interface Recipe {
   fat: number
 }
 
-export default function Component() {
+export default function RecipeFinder() {
   const [ingredients, setIngredients] = useState<string[]>([])
   const [recipes, setRecipes] = useState<Recipe[]>([])
   const [isLoading, setIsLoading] = useState(false)
