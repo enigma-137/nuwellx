@@ -2,7 +2,12 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
-export async function analyzeFood(input: string | File): Promise<{
+interface ImageInput {
+  buffer: ArrayBuffer;
+  mimeType: string;
+}
+
+export async function analyzeFood(input: string | ImageInput): Promise<{
   name: string;
   ingredients: string[];
   preparationProcess: string[];
@@ -29,12 +34,11 @@ Preparation:
 2. [Step 2]
 ...`;
   } else {
-    const imageData = await input.arrayBuffer();
     imageParts = [
       {
         inlineData: {
-          data: Buffer.from(imageData).toString('base64'),
-          mimeType: input.type,
+          data: Buffer.from(input.buffer).toString('base64'),
+          mimeType: input.mimeType,
         },
       },
     ];
@@ -100,7 +104,7 @@ Preparation:
     };
   } catch (error) {
     console.error('Error in analyzeFood:', error);
-    console.error('Input type:', typeof input === 'string' ? 'text' : 'file');
+    console.error('Input type:', typeof input === 'string' ? 'text' : 'image');
     throw new Error('Failed to analyze food: ' + (error instanceof Error ? error.message : String(error)));
   }
 }

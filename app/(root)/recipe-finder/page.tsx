@@ -2,6 +2,7 @@
 
 import React, { useState, useRef } from 'react'
 import Image from 'next/image'
+import { Image as LucideImage } from 'lucide-react';
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -148,56 +149,78 @@ export default function RecipeFinder() {
       })
     }
   }
+
+  const resetRecipes = () => {
+    setRecipes([])
+    setIngredients([])
+    if (inputRef.current) {
+      inputRef.current.value = ''
+    }
+  }
+
   return (
     <ToastProvider>
       <div className="container mx-auto p-4">
         <h1 className="text-3xl font-bold mb-6 text-center">Recipe Finder</h1>
-        <p className='text-sm text-center'>Got Ingredients but you don't know what to eat? upload of a photo of them or enter them to get recipes'</p>
         
-        <div className="mb-6 mt-6">
-          <h2 className="text-xl mb-2 font-semibold">Upload Image of Ingredients</h2>
-          <Input 
-            type="file" 
-            onChange={handleImageUpload} 
-            accept="image/*" 
-            disabled={isLoading}
-            className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90"
-          />
-        </div>
+        {recipes.length === 0 ? (
+          <>
+            <p className='text-sm text-center mb-6'>Got Ingredients but you don't know what to eat? Upload a photo of them or enter them to get recipes</p>
+            
+            <div className="mb-6">
+              <h2 className="text-xl mb-2 font-semibold">Upload Image of Ingredients</h2>
+              <div className="w-full h-48 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center bg-blue-50 relative">
+                <input
+                  type="file"
+                  onChange={handleImageUpload}
+                  accept="image/*"
+                  disabled={isLoading}
+                  className="absolute inset-0 opacity-0 cursor-pointer"
+                />
+                <div className="text-center pointer-events-none">
+                  <LucideImage className="mx-auto h-10 w-10 text-gray-500" />
+                  <p className="text-gray-500 mt-2">Drag and drop or <span className="text-blue-600 cursor-pointer">browse</span></p>
+                </div>
+              </div>
+            </div>
 
-        <div className="mb-6">
-          <h2 className="text-xl mb-2 font-semibold">Or Enter Ingredients Manually</h2>
-          <form onSubmit={handleTextInput} className="flex gap-2">
-            <Input 
-              type="text" 
-              placeholder="Enter an ingredient" 
-              ref={inputRef}
-              className="flex-grow"
-            />
-            <Button type="submit" disabled={isLoading}>Add</Button>
-          </form>
-        </div>
+            <div className="mb-6">
+              <h2 className="text-xl mb-2 font-semibold">Or Enter Ingredients Manually</h2>
+              <form onSubmit={handleTextInput} className="flex gap-2">
+                <Input 
+                  type="text" 
+                  placeholder="Enter an ingredient" 
+                  ref={inputRef}
+                  className="flex-grow"
+                />
+                <Button type="submit" disabled={isLoading}>Add</Button>
+              </form>
+            </div>
 
-        <div className="mb-6">
-          <h2 className="text-xl mb-2 font-semibold">Your Ingredients:</h2>
-          <div className="flex flex-wrap gap-2">
-            {ingredients.map((ingredient, index) => (
-              <Button 
-                key={index} 
-                variant="secondary" 
-                className="flex items-center gap-2"
-                onClick={() => removeIngredient(ingredient)}
-              >
-                {ingredient}
-                <span className="text-xs">&times;</span>
-              </Button>
-            ))}
-          </div>
-        </div>
+            <div className="mb-6">
+              <h2 className="text-xl mb-2 font-semibold">Your Ingredients:</h2>
+              <div className="flex flex-wrap gap-2">
+                {ingredients.map((ingredient, index) => (
+                  <Button 
+                    key={index} 
+                    variant="secondary" 
+                    className="flex items-center gap-2"
+                    onClick={() => removeIngredient(ingredient)}
+                  >
+                    {ingredient}
+                    <span className="text-xs">&times;</span>
+                  </Button>
+                ))}
+              </div>
+            </div>
 
-        <Button onClick={findRecipes} disabled={isLoading || ingredients.length === 0} className="w-full mb-6">
-          {isLoading ? "Searching..." : "Find Recipes"}
-        </Button>
+            <Button onClick={findRecipes} disabled={isLoading || ingredients.length === 0} className="w-full mb-6">
+              {isLoading ? "Searching..." : "Find Recipes"}
+            </Button>
+          </>
+        ) : (
+          <Button onClick={resetRecipes} className="w-full mb-6">Find New Recipes</Button>
+        )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {recipes.map((recipe) => (
@@ -213,20 +236,15 @@ export default function RecipeFinder() {
                     <li key={index} className="text-sm">
                       {ingredient}
                     </li>
-                    
                   ))}
-                  <li>
-                  <Button onClick={() => addToTracker(recipe)}>Add to Tracker</Button>
-                  </li>
                 </ul>
+                <Button onClick={() => addToTracker(recipe)} className="mb-2">Add to Tracker</Button>
                 <h3 className="font-semibold mb-1">Instructions:</h3>
                 <p className="text-sm">{recipe.instructions}</p>
               </CardContent>
             </Card>
           ))}
         </div>
-
-        
       </div>
       <ToastViewport />
     </ToastProvider>

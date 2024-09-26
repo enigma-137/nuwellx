@@ -5,7 +5,8 @@ export async function POST(request: NextRequest) {
   try {
     const contentType = request.headers.get('content-type');
     let foodName: string | null = null;
-    let image: File | null = null;
+    let imageBuffer: ArrayBuffer | null = null;
+    let imageMimeType: string | null = null;
 
     if (contentType?.includes('application/json')) {
       const jsonData = await request.json();
@@ -13,7 +14,11 @@ export async function POST(request: NextRequest) {
     } else if (contentType?.includes('multipart/form-data')) {
       const formData = await request.formData();
       foodName = formData.get('foodName') as string | null;
-      image = formData.get('image') as File | null;
+      const imageFile = formData.get('image') as File | null;
+      if (imageFile) {
+        imageBuffer = await imageFile.arrayBuffer();
+        imageMimeType = imageFile.type;
+      }
     } else {
       return NextResponse.json({ error: 'Unsupported content type' }, { status: 415 });
     }
@@ -22,8 +27,8 @@ export async function POST(request: NextRequest) {
 
     if (typeof foodName === 'string' && foodName.trim() !== '') {
       foodAnalysis = await analyzeFood(foodName.trim());
-    } else if (image instanceof File) {
-      foodAnalysis = await analyzeFood(image);
+    } else if (imageBuffer && imageMimeType) {
+      foodAnalysis = await analyzeFood({ buffer: imageBuffer, mimeType: imageMimeType });
     } else {
       return NextResponse.json({ error: 'Invalid input' }, { status: 400 });
     }

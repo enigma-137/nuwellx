@@ -5,8 +5,10 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useToast } from "@/hooks/use-toast"
-import { Loader2 } from "lucide-react"
+import { Loader2, Loader2Icon } from "lucide-react"
+import { Image as LucideImage } from 'lucide-react';
 import axios from 'axios'
+import Markdown from 'react-markdown'
 
 interface FoodAnalysis {
   name: string
@@ -78,34 +80,54 @@ export function FoodAnalyzer() {
     }
   }
 
+  const resetAnalysis = () => {
+    setFoodAnalysis(null)
+    if (inputRef.current) {
+      inputRef.current.value = ''
+    }
+  }
+
   return (
     <div className="container mx-auto p-4">
       <h2 className="text-2xl font-bold mb-4">Food Analyzer</h2>
-      <p className='text-sm mb-4'>Upload an image of a prepared food or enter its name to get ingredients and preparation process</p>
       
-      <div className="mb-6">
-        <h3 className="text-xl mb-2 font-semibold">Upload Food Image</h3>
-        <Input 
-          type="file" 
-          onChange={handleImageUpload} 
-          accept="image/*" 
-          disabled={isLoading}
-          className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90"
-        />
-      </div>
+      {!foodAnalysis ? (
+        <>
+          <p className='text-sm mb-4'>Upload an image of a prepared food or enter its name to get ingredients and preparation process</p>
+          
+          <div className="mb-6">
+            <h3 className="text-xl mb-2 font-semibold">Upload Food Image</h3>
+            <div className="w-full h-48 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center bg-blue-50 relative">
+              <input
+                type="file"
+                onChange={handleImageUpload}
+                accept="image/*"
+                disabled={isLoading}
+                className="absolute inset-0 opacity-0 cursor-pointer"
+              />
+              <div className="text-center pointer-events-none">
+                <LucideImage className="mx-auto h-10 w-10 text-gray-500" />
+                <p className="text-gray-500 mt-2">Drag and drop or <span className="text-blue-600 cursor-pointer">browse</span></p>
+              </div>
+            </div>
+          </div>
 
-      <div className="mb-6">
-        <h3 className="text-xl mb-2 font-semibold">Or Enter Food Name</h3>
-        <form onSubmit={handleTextInput} className="flex gap-2">
-          <Input 
-            type="text" 
-            placeholder="Enter food name" 
-            ref={inputRef}
-            className="flex-grow"
-          />
-          <Button type="submit" disabled={isLoading}>Analyze</Button>
-        </form>
-      </div>
+          <div className="mb-6">
+            <h3 className="text-xl mb-2 font-semibold">Or Enter Food Name</h3>
+            <form onSubmit={handleTextInput} className="flex gap-2">
+              <Input 
+                type="text" 
+                placeholder="Enter food name" 
+                ref={inputRef}
+                className="flex-grow"
+              />
+              <Button type="submit" disabled={isLoading}>Analyze</Button>
+            </form>
+          </div>
+        </>
+      ) : (
+        <Button onClick={resetAnalysis} className="mb-4">Analyze Another Food</Button>
+      )}
 
       {isLoading && (
         <div className="flex justify-center items-center">
@@ -120,17 +142,17 @@ export function FoodAnalyzer() {
           </CardHeader>
           <CardContent>
             <h4 className="font-semibold mb-2">Ingredients:</h4>
-            <ul className="list-disc list-inside mb-4">
+            <ul className="mb-4 list-none">
               {foodAnalysis.ingredients.map((ingredient, index) => (
-                <li key={index} className="text-sm">{ingredient}</li>
+                <li key={index} className="text-sm"><Markdown>{ingredient}</Markdown></li>
               ))}
             </ul>
             <h4 className="font-semibold mb-2">Preparation Process:</h4>
-            <ol className="list-decimal list-inside">
+            <ul className="list-none">
               {foodAnalysis.preparationProcess.map((step, index) => (
-                <li key={index} className="text-sm mb-2">{step}</li>
+                <li key={index} className="text-sm mb-2"><Markdown>{step}</Markdown></li>
               ))}
-            </ol>
+            </ul>
           </CardContent>
         </Card>
       )}

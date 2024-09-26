@@ -68,7 +68,7 @@ export default function DieticianPage() {
       <h1 className="text-2xl font-bold mb-4 pt-4 shadow-inner text-center">
         Nuwell AI Dietician <Bot className="inline" /> <Stethoscope className="inline" />
       </h1>
-      <div className="flex-1 overflow-y-auto border border-gray-300 rounded-none md:rounded-lg p-1 bg-gray-100 max-h-[80vh] min-h-[80vh]"> 
+      <div className="flex-1 overflow-y-auto border border-gray-300 rounded-none md:rounded-lg p-1 bg-gray-100 max-h-[80vh] min-h-[40vh]"> 
         {messages.length === 0 ? (
           <div className="flex items-center  justify-center h-full text-gray-400">
            <p className='pt-8 items-center flex justify-center'>No messages yet</p> 
