@@ -63,12 +63,12 @@ export default function DieticianPage() {
   }
 
   return (
-    <div className="flex flex-col h-screen w-full p-1 bg-gray-50">
-    <div className="w-full h-full mx-auto bg-white rounded-none md:rounded-lg shadow-lg p-1 max-w-full md:max-w-xl">
+    <div className="flex flex-col h-screen   w-full p-1 bg-white">
+    <div className="w-full mx-auto bg-white rounded-none md:rounded-lg shadow-lg p-1 max-w-full md:max-w-xl">
       <h1 className="text-2xl font-bold mb-4 pt-4 shadow-inner text-center">
         Nuwell AI Dietician <Bot className="inline" /> <Stethoscope className="inline" />
       </h1>
-      <div className="flex-1 overflow-y-auto border border-gray-300 rounded-none md:rounded-lg p-1 bg-gray-100 max-h-[80vh] min-h-[40vh]"> 
+      <div className="flex-1 overflow-y-auto border border-gray-300 rounded-none md:rounded-lg p-1 bg-gray-100 max-h-[80vh] min-h-[60vh]"> 
         {messages.length === 0 ? (
           <div className="flex items-center  justify-center h-full text-gray-400">
            <p className='pt-8 items-center flex justify-center'>No messages yet</p> 
