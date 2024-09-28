@@ -14,12 +14,12 @@ const Page = () => {
   }
 
   return (
-    <div className="flex flex-col gap-6 items-center justify-center min-h-screen bg-gradient-to-b from-sky-50 to-white  p-8">
+    <div className="flex flex-col gap-6 items-center justify-center min-h-screen p-8">
       <div className="text-center max-w-lg">
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">
+        <h1 className="text-3xl font-bold mb-4">
           NuWell Food Scanner 
         </h1>
-        <p className='text-lg text-gray-700 mb-6'>
+        <p className='text-lg mb-6'>
           Scan foods to get their nutritional composition and other information!
         </p>
         <Button 
