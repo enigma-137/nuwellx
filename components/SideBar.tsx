@@ -93,7 +93,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
 
             <ul className="space-y-2">
               {[
-                { path: "/", label: "Scan", icon: ScanFaceIcon },
+                { path: "/scan", label: "Scan", icon: ScanFaceIcon },
                 { path: "/dietician", label: "AI Dietician", icon: MessageSquare },
                 { path: "/scannedfoods", label: "My Foods", icon: LucideCookie },
                 { path: "/food-finder", label: "Find Recipes", icon: CookingPot },

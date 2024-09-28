@@ -31,7 +31,7 @@ export default function Home() {
   }
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen p-6 bg-gray-50">
+    <main className="flex flex-col items-center justify-center min-h-screen p-6 ">
       <h1 className="text-2xl md:text-4xl font-bold mb-6 text-center text-gray-800">Nuwell Food Analyzer </h1>
 
       {!analysis && !loading && (
@@ -42,7 +42,7 @@ export default function Home() {
 
       {/* Conditionally render the Camera component if there's no analysis */}
       {!analysis && !loading && (
-        <div className="w-full max-w-md p-4 bg-white rounded-lg shadow-md border border-gray-200">
+        <div className="w-full max-w-md p-4  rounded-lg shadow-md border border-gray-200">
           <Camera onCapture={handleCapture} />
         </div>
       )}
