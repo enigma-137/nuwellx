@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { Menu } from 'lucide-react';
 import Sidebar from '@/components/SideBar';
 import { ReminderModal } from '@/components/ReminderModal';
+import { ThemeProvider } from '@/components/theme-provider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -42,12 +43,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="bg-gradient-to-b from-sky-50 to-white min-h-screen">
+        <ThemeProvider attribute='class'>
+        <div className=" min-h-screen">
           <div className="flex lg:hidden justify-between items-center p-4">
             {/* Mobile Sidebar Toggle Button */}
             <button
               onClick={() => setIsSidebarOpen(true)}
-              className="text-black bg-white shadow-lg rounded-full p-4"
+              className=" shadow-lg rounded-full p-4"
               aria-label="Open menu"
             >
               <Menu size={24} />
@@ -71,6 +73,7 @@ export default function RootLayout({
 
         {/* Reminder Modal */}
         <ReminderModal />
+        </ThemeProvider>
       </body>
     </html>
   );

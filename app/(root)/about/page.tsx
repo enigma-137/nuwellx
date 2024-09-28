@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card"
 
 export default function AboutUs() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-sky-50 to-white py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-4xl font-bold text-center text-sky-800 mb-12">About Nuwell</h1>
         
@@ -18,7 +18,7 @@ export default function AboutUs() {
             />
           </div>
           
-          <Card className="bg-white shadow-lg">
+          <Card className="shadow-lg">
             <CardContent className="p-6">
               <h2 className="text-2xl font-semibold text-sky-700 mb-4">Our Mission</h2>
               <p className="text-gray-600 mb-6">

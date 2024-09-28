@@ -73,13 +73,13 @@ export default function FoodHistory() {
   }
 
   return (
-    <Card className="w-full max-w-2xl mx-auto">
+    <Card className="w-full h-screen max-w-2xl mx-auto">
       <CardHeader>
         <CardTitle>Your Scanned Food</CardTitle>
         <CardDescription>View and analyze your past food scans</CardDescription>
       </CardHeader>
       <CardContent>
-        <ScrollArea className="h-[400px] w-full rounded-md border p-4">
+        <ScrollArea className="h-[400px] w-full rounded-md p-1">
           {foodHistory.length === 0 ? (
             <div className="text-center">
               <p className='mb-4'>No food scans available yet.</p>
@@ -92,7 +92,7 @@ export default function FoodHistory() {
             </div>
           ) : (
             foodHistory.map((food) => (
-              <div key={food.id} className="mb-4 p-4 border rounded-lg">
+              <div key={food.id} className="mb-4 p-2 border rounded-lg">
                 <h3 className="font-semibold mb-2">
                   Scanned on: {new Date(food.createdAt).toLocaleString()}
                 </h3>

@@ -178,13 +178,14 @@ export default function NutritionTracker() {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="food" className="block text-sm font-medium text-gray-700">Food Item</label>
+              <label htmlFor="food" className="block text-sm font-medium ">Food Item</label>
               <Input
                 id="food"
                 name="food"
                 value={newEntry.food}
                 onChange={handleInputChange}
                 placeholder="Food Item"
+                className='text-black'
                 required
               />
             </div>
@@ -198,6 +199,7 @@ export default function NutritionTracker() {
                 value={newEntry.protein}
                 onChange={handleInputChange}
                 placeholder="Protein (g)"
+                className='text-black'
                 required
               />
             </div>
@@ -211,6 +213,7 @@ export default function NutritionTracker() {
                 value={newEntry.carbs}
                 onChange={handleInputChange}
                 placeholder="Carbs (g)"
+                className='text-black'
                 required
               />
             </div>
@@ -224,6 +227,7 @@ export default function NutritionTracker() {
                 value={newEntry.fat}
                 onChange={handleInputChange}
                 placeholder="Fat (g)"
+                className='text-black'
                 required
               />
             </div>
