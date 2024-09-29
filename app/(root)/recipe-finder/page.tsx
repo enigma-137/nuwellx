@@ -160,9 +160,9 @@ export default function RecipeFinder() {
   }
 
   const cardColors = [
-    'bg-gradient-to-br from-pink-100 to-rose-200',
-    'bg-gradient-to-br from-blue-100 to-cyan-200',
-    'bg-gradient-to-br from-green-100 to-emerald-200',
+    'bg-gradient-to-br from-pink-400 to-rose-500',
+    'bg-gradient-to-br from-blue-300 to-cyan-600',
+    'bg-gradient-to-br from-green-500 to-emerald-700',
   ]
 
   return (
@@ -185,8 +185,8 @@ export default function RecipeFinder() {
                 className="absolute inset-0 opacity-0 cursor-pointer"
               />
               <div className="text-center pointer-events-none">
-                <LucideImage className="mx-auto h-10 w-10 " />
-                <p className="text-gray-500 mt-2">Drag and drop or <span className="text-blue-600 cursor-pointer">browse</span></p>
+                <LucideImage className="mx-auto text-sky-600 h-10 w-10 " />
+                <p className=" text-gray-600 mt-2">Drag and drop or <span className="text-sky-600 cursor-pointer">browse</span></p>
               </div>
             </div>
           </div>
@@ -228,8 +228,8 @@ export default function RecipeFinder() {
       ) : (
         <>
           <Button onClick={resetRecipes} className="w-full mb-6">Find New Recipes</Button>
-          <ScrollArea className="w-full whitespace-nowrap rounded-md border">
-            <div className="flex w-max space-x-4 p-4">
+          <ScrollArea className="w-full whitespace-nowrap  rounded-md border">
+            <div className="flex w-max  space-x-4 p-4">
               {recipes.slice(0, 3).map((recipe, index) => (
                 <Card key={recipe.id} className={`w-[300px] ${cardColors[index % cardColors.length]}`}>
                   <CardHeader>
@@ -237,7 +237,7 @@ export default function RecipeFinder() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm mb-2">Prep: {recipe.prepTime} min | Cook: {recipe.cookTime} min | Servings: {recipe.servings}</p>
-                    <h3 className="font-semibold mb-1">Ingredients:</h3>
+                    <h3 className="font-semibold mb-1 ">Ingredients:</h3>
                     <ScrollArea className="h-32 w-full rounded-md border p-2">
                       <ul className="list-disc list-inside">
                         {recipe.ingredients.map((ingredient, idx) => (
