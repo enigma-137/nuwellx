@@ -1,14 +1,14 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter, Poppins } from 'next/font/google'
-import './globals.css'
+import { Inter } from 'next/font/google'
+import './globals.css'  
 import { ClerkProvider } from '@clerk/nextjs'
-import { ToastProvider } from '@/components/ui/toast'
+import { Toaster } from '@/components/ui/toaster'
+import { ThemeProvider } from '@/components/theme-provider'
 
-
-const inter = Inter({ 
+const inter = Inter({
   subsets: ['latin'],
   weight: ['400', "500", "600", "700"],
-  variable: '--font-poppins'
+  variable: '--font-inter'  
 })
 
 const APP_NAME = "Nuwell";
@@ -17,12 +17,10 @@ const APP_TITLE_TEMPLATE = "%s - Nuwell";
 const APP_DESCRIPTION = "A nutritional app";
 
 export const metadata: Metadata = {
- 
   manifest: "/manifest.json",
   icons: {
-    icon: '/favicon.ico', //oya
+    icon: '/favicon.ico',
   },
-
   applicationName: APP_NAME,
   title: {
     default: APP_DEFAULT_TITLE,
@@ -33,19 +31,15 @@ export const metadata: Metadata = {
     capable: true,
     statusBarStyle: "default",
     title: APP_DEFAULT_TITLE,
-    // startUpImage: [],
   },
   formatDetection: {
     telephone: false,
   },
- 
-  
 };
 
 export const viewport: Viewport = {
   themeColor: "#FFFFFF",
 };
-
 
 export default function RootLayout({
   children,
@@ -54,18 +48,19 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <ToastProvider>
-      <html lang="en">
-      <body className={inter.className}>
-      <head>
-      </head>
-        {children}
-    
+      <html lang="en" suppressHydrationWarning>
+        <body className={inter.className}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+            <Toaster />
+          </ThemeProvider>
         </body>
-    </html>
-      </ToastProvider>
-   
+      </html>
     </ClerkProvider>
-   
   )
 }

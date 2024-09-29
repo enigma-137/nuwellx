@@ -32,10 +32,10 @@ export default function Home() {
 
   return (
     <main className="flex flex-col items-center justify-center min-h-screen p-6 ">
-      <h1 className="text-2xl md:text-4xl font-bold mb-6 text-center text-gray-800">Nuwell Food Analyzer </h1>
+      <h1 className="text-2xl md:text-4xl font-bold mb-6 text-center">Nuwell Food Analyzer </h1>
 
       {!analysis && !loading && (
-        <p className="text-base md:text-lg font-medium mb-6 p-5 rounded-xl shadow-inner text-gray-700 text-center">
+        <p className="text-base md:text-lg font-medium mb-6 p-5 rounded-xl shadow-inner  text-center">
           Place the camera on any food substance to get nutritional information
         </p>
       )}
@@ -49,18 +49,18 @@ export default function Home() {
 
       {/* Display loading message */}
       {loading && (
-        <div className="flex items-center justify-center w-full max-w-md p-4 bg-white rounded-lg shadow-md border border-gray-200">
+        <div className="flex items-center justify-center w-full max-w-md p-1 rounded-lg shadow-md border border-gray-200">
           <Loader className="text-gray-500 animate-spin" />
         </div>
       )}
 
       {/* Display results if analysis is available */}
       {analysis && (
-        <div className="w-full max-w-md p-4 bg-white rounded-lg shadow-md border border-gray-200 text-center">
+        <div className="w-full max-w-md p-4  rounded-lg shadow-md border border-gray-200 text-center">
           <Results analysis={analysis} />
           <Button
             onClick={resetAnalysis}
-            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600"
+            className="mt-4 px-4 py-2  text-white rounded-lg shadow hover:bg-blue-600"
           >
             
             Capture Another Image  <CameraIcon className='inline'/>

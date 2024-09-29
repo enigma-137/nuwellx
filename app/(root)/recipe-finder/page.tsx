@@ -185,7 +185,7 @@ export default function RecipeFinder() {
                 className="absolute inset-0 opacity-0 cursor-pointer"
               />
               <div className="text-center pointer-events-none">
-                <LucideImage className="mx-auto h-10 w-10 text-gray-500" />
+                <LucideImage className="mx-auto h-10 w-10 " />
                 <p className="text-gray-500 mt-2">Drag and drop or <span className="text-blue-600 cursor-pointer">browse</span></p>
               </div>
             </div>
@@ -221,7 +221,7 @@ export default function RecipeFinder() {
             </div>
           </div>
 
-          <Button onClick={findRecipes} disabled={isLoading || ingredients.length === 0} className="w-full mb-6">
+          <Button onClick={findRecipes} disabled={isLoading || ingredients.length === 0} className="w-full bg-sky-600 text-white mb-6">
             {isLoading ? "Searching..." : "Find Recipes"}
           </Button>
         </>

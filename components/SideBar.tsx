@@ -43,7 +43,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       <div
         className={`fixed top-0 left-0 bottom-0 w-64 shadow-lg z-50 transform transition-transform duration-300 ease-in-out 
         ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
-        lg:translate-x-0 bg-background bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800`}
+        lg:translate-x-0   dark:bg-gray-900 border-r border-gray-800 dark:border-gray-800`}
       >
         <div className="flex flex-col h-full">
           <div className="p-4 border-b border-gray-200 dark:border-gray-700">
@@ -62,7 +62,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                   <span className="sr-only">Toggle theme</span>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className='bg-white  dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800' >
+              <DropdownMenuContent align="end" >
                 <DropdownMenuItem onClick={() => setTheme("light")}>
                   Light
                 </DropdownMenuItem>
@@ -86,7 +86,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                 <UserButton />
                 <div>
                   <span className="font-medium text-foreground">{firstName}</span>
-                  <p className="text-muted-foreground font-medium text-sm">My account</p>
+                  <p className="text-sky-600 font-bold text-sm">My account</p>
                 </div>
               </div>
             </div>

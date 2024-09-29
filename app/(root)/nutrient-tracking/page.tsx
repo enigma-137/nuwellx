@@ -158,7 +158,7 @@ export default function NutritionTracker() {
                   <Info className="h-4 w-4" />
                 </Button>
               </DialogTrigger>
-              <DialogContent className='bg-white'>
+              <DialogContent>
                 <DialogHeader>
                   <DialogTitle>Calorie Calculation</DialogTitle>
                   <DialogDescription>
@@ -185,13 +185,13 @@ export default function NutritionTracker() {
                 value={newEntry.food}
                 onChange={handleInputChange}
                 placeholder="Food Item"
-                className='text-black'
+               
                 required
               />
             </div>
 
             <div>
-              <label htmlFor="protein" className="block text-sm font-medium text-gray-700">Protein (g)</label>
+              <label htmlFor="protein" className="block text-sm font-medium ">Protein (g)</label>
               <Input
                 id="protein"
                 name="protein"
@@ -199,13 +199,13 @@ export default function NutritionTracker() {
                 value={newEntry.protein}
                 onChange={handleInputChange}
                 placeholder="Protein (g)"
-                className='text-black'
+               
                 required
               />
             </div>
 
             <div>
-              <label htmlFor="carbs" className="block text-sm font-medium text-gray-700">Carbs (g)</label>
+              <label htmlFor="carbs" className="block text-sm font-medium">Carbs (g)</label>
               <Input
                 id="carbs"
                 name="carbs"
@@ -213,13 +213,13 @@ export default function NutritionTracker() {
                 value={newEntry.carbs}
                 onChange={handleInputChange}
                 placeholder="Carbs (g)"
-                className='text-black'
+         
                 required
               />
             </div>
 
             <div>
-              <label htmlFor="fat" className="block text-sm font-medium text-gray-700">Fat (g)</label>
+              <label htmlFor="fat" className="block text-sm font-medium ">Fat (g)</label>
               <Input
                 id="fat"
                 name="fat"
@@ -227,13 +227,13 @@ export default function NutritionTracker() {
                 value={newEntry.fat}
                 onChange={handleInputChange}
                 placeholder="Fat (g)"
-                className='text-black'
+               
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Calculated Calories</label>
+              <label className="block text-sm font-medium">Calculated Calories</label>
               <p className="text-lg font-semibold">
                 {calculateCalories(newEntry.protein, newEntry.carbs, newEntry.fat)}
               </p>

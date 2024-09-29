@@ -22,17 +22,12 @@ const Page = () => {
         <p className='text-lg mb-6'>
           Scan foods to get their nutritional composition and other information!
         </p>
-        <Button 
-          onClick={handleRedirect} 
-          className="px-8 py-4 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-300"
-        >
-          Scan Food <ScanSearchIcon  className='inline  ml-2'/>
-        </Button>
+       
       </div>
 
       <div className="mt-8">
         <Image
-          src="/image.jpeg" 
+          src="/scan.webp" 
           alt="Food Scanner Illustration"
           className="rounded-lg shadow-lg"
           width={400}
@@ -40,6 +35,13 @@ const Page = () => {
           height={400}
         />
       </div>
+
+      <Button 
+          onClick={handleRedirect} 
+          className="px-8 py-4 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-300"
+        >
+          Scan Food <ScanSearchIcon  className='inline  ml-2'/>
+        </Button>
     </div>
   )
 }

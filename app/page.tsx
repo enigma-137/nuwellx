@@ -10,6 +10,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { ContactForm } from '@/components/ContactForm';
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -30,9 +31,9 @@ export default function Home() {
           <h1 className="text-white text-3xl font-bold">Nuwell</h1>
           <nav>
             <ul className="flex space-x-4">
-              <li><a href="#about" className="text-white">About</a></li>
-              <li><a href="#features" className="text-white">Features</a></li>
-              <li><a href="#faq" className="text-white">FAQ</a></li>
+              <li><Link href="#about" className="text-white">About</Link></li>
+              <li><Link href="#features" className="text-white">Contact</Link></li>
+              <li><Link href="#faq" className="text-white">FAQ</Link></li>
             </ul>
           </nav>
         </div>
@@ -81,7 +82,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Scan food, track nutrients, and get personalized advice from our AI Dietician.
+            Scan food, Get Recipes, track nutrients, and get personalized advice from our AI Dietician.
           </motion.p>
           <motion.button 
             className="px-8 py-4 bg-white text-blue-600 rounded-full text-lg font-semibold hover:bg-blue-100 transition duration-300"
@@ -94,14 +95,13 @@ export default function Home() {
             </Link>
           </motion.button>
         </div>
-        {/* Animated circles */}
-     
+      
       </section>
 
       {/* Features Section */}
       <section className="py-20" id="features">
         <div className="container mx-auto text-center px-4">
-          <h3 className="text-3xl font-bold text-blue-900">App Features</h3>
+          <h3 className="text-3xl font-bold text-blue-900">What you can do!</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-10">
             {/* Feature 1 */}
             <div className="p-6 bg-white rounded-lg shadow-md">
@@ -137,13 +137,14 @@ export default function Home() {
           <h3 className="text-3xl font-bold text-blue-900">About Nutrient Tracker</h3>
           <p className="text-lg text-gray-700 mt-4">
             Our mission is to make nutrition tracking easier for everyone. With just a simple scan, you can track your nutrient intake and get insights from our AI Dietician to improve your health.
+            We're passionate about empowering individuals to make informed decisions about their nutrition. Our AI-powered food analyzer and personalized dietician chatbot are designed to make healthy eating accessible and enjoyable for everyone.
           </p>
         </div>
       </section>
 
       <section className='px-4 md:px-20 py-20' id="faq">
         <h3 className="text-3xl font-bold text-blue-900 text-center mb-10">Frequently Asked Questions</h3>
-        <Accordion type="single" collapsible className="w-full max-w-3xl mx-auto">
+        <Accordion type="single" collapsible className="w-full text-black max-w-3xl mx-auto">
           <AccordionItem value="item-1">
             <AccordionTrigger>How accurate is the food scanning feature?</AccordionTrigger>
             <AccordionContent>
@@ -171,7 +172,11 @@ export default function Home() {
         </Accordion>
       </section>
 
-      {/* Footer */}
+   
+
+      <section className='px-20 py-20'>
+<ContactForm />
+      </section>
       <footer className="bg-blue-600 py-6">
         <div className="container mx-auto text-center text-white">
           <p>&copy; 2024  Nuwell. All rights reserved.</p>
