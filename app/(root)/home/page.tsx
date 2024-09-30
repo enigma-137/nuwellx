@@ -56,14 +56,14 @@ export default function Home() {
 
       {/* Display results if analysis is available */}
       {analysis && (
-        <div className="w-full max-w-md p-4  rounded-lg shadow-md border border-gray-200 text-center">
+        <div className="w-full max-w-md p-4  rounded-lg shadow-md text-center">
           <Results analysis={analysis} />
           <Button
             onClick={resetAnalysis}
-            className="mt-4 px-4 py-2  text-white rounded-lg shadow hover:bg-blue-600"
+            className="mt-4 px-4 py-2  text-white rounded-lg shadow "
           >
             
-            Capture Another Image  <CameraIcon className='inline'/>
+            Capture Another Image  <CameraIcon className='inline ml-2'/>
           </Button>
         </div>
       )}

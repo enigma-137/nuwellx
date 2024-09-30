@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation' 
 import React from 'react'
 import Image from 'next/image'
-import { ScanSearchIcon } from 'lucide-react'
+import { BarcodeIcon, ScanSearchIcon } from 'lucide-react'
 
 const Page = () => {
   const router = useRouter()
@@ -25,7 +25,7 @@ const Page = () => {
        
       </div>
 
-      <div className="mt-8">
+      <div className="mt-8 ">
         <Image
           src="/scan.webp" 
           alt="Food Scanner Illustration"
@@ -35,13 +35,23 @@ const Page = () => {
           height={400}
         />
       </div>
-
-      <Button 
+<div className='flex gap-4'>
+<Button 
           onClick={handleRedirect} 
-          className="px-8 py-4 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-300"
+          className="px-4 py-4 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-300"
         >
           Scan Food <ScanSearchIcon  className='inline  ml-2'/>
         </Button>
+
+        
+      <Button 
+          onClick={()=> router.push("/barcode-scanner")} 
+          className="px-4 py-4 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-300"
+        >
+          Scan Barcode <BarcodeIcon  className='inline  ml-2'/>
+        </Button>
+</div>
+     
     </div>
   )
 }

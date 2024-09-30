@@ -90,7 +90,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <Link href="/home">
+            <Link href="/scan">
               Get Started Now
             </Link>
           </motion.button>
@@ -134,7 +134,7 @@ export default function Home() {
       {/* About Section */}
       <section className="bg-blue-50 py-20" id="about">
         <div className="container mx-auto text-center px-4">
-          <h3 className="text-3xl font-bold text-blue-900">About Nutrient Tracker</h3>
+          <h3 className="text-3xl font-bold text-blue-900">About Nuwell</h3>
           <p className="text-lg text-gray-700 mt-4">
             Our mission is to make nutrition tracking easier for everyone. With just a simple scan, you can track your nutrient intake and get insights from our AI Dietician to improve your health.
             We're passionate about empowering individuals to make informed decisions about their nutrition. Our AI-powered food analyzer and personalized dietician chatbot are designed to make healthy eating accessible and enjoyable for everyone.
