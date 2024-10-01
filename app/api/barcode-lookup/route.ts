@@ -1,52 +1,29 @@
-import { NextResponse } from 'next/server';
-import OAuth from 'oauth-1.0a';
-import crypto from 'crypto';
+// /app/api/barcode-lookup/route.ts
+import { NextRequest, NextResponse } from 'next/server';
 import axios from 'axios';
 
-const CONSUMER_KEY = process.env.FATSECRET_CONSUMER_KEY;
-const CONSUMER_SECRET = process.env.FATSECRET_CONSUMER_SECRET;
-
-const oauth =  new OAuth({
-  consumer: {
-    key: CONSUMER_KEY!,
-    secret: CONSUMER_SECRET!,
-  },
-  signature_method: 'HMAC-SHA1',
-  hash_function(baseString, key) {
-    return crypto.createHmac('sha1', key).update(baseString).digest('base64');
-  },
-});
-
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   const { barcode } = await req.json();
 
-  const url = 'https://platform.fatsecret.com/rest/server.api';
-  const params = {
-    method: 'food.find_id_for_barcode',
-    format: 'json',
-    barcode: barcode,
-  };
-
-  const requestData = {
-    url,
-    method: 'GET',
-    data: params,
-  };
-
-  const authHeader = oauth.authorize(requestData);
-
   try {
-    const response = await axios.get(url, {
-      params,
+    // Example API request using Zebra Barcode Lookup (replace with real URL and params)
+    const response = await axios.get(`https://api.zebra.com/barcode-lookup`, {
+      params: {
+        barcode,
+        // other parameters as needed
+      },
       headers: {
-        ...authHeader,
+        'Authorization': `Bearer ${process.env.ZEBRA_API_KEY}`, // Set your Zebra API Key
         'Content-Type': 'application/json',
       },
     });
 
-    return NextResponse.json(response.data);
+    const productData = response.data;
+
+    // Return the product data as JSON
+    return NextResponse.json({ product: productData });
   } catch (error) {
-    console.error('Error fetching food:', error);
-    return NextResponse.json({ error: 'Failed to fetch food data' }, { status: 500 });
+    console.error('Error fetching product data:', error);
+    return NextResponse.json({ error: 'Error fetching product data' }, { status: 500 });
   }
 }

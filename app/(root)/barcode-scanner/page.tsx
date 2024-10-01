@@ -1,95 +1,77 @@
+
 'use client';
 
-import React, { useRef, useEffect, useState } from 'react';
-// import Quagga from '@ericblade/quagga2'; // Make sure to install this package
-// import axios from 'axios';
-import { Construction } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { Html5QrcodeScanner } from 'html5-qrcode';
+import axios from 'axios';
 
-
-interface FoodInfo {
+interface ProductInfo {
   name: string;
-  calories: number;
+  description: string;
+  // Add other properties as necessary
 }
 
 const BarcodeScannerPage = () => {
-  // const scannerRef = useRef<HTMLDivElement>(null);
-  // const [foodInfo, setFoodInfo] = useState<FoodInfo | null>(null);
-  // const [error, setError] = useState<string>('');
+  const [productInfo, setProductInfo] = useState<ProductInfo | null>(null);
+  const [error, setError] = useState<string>('');
+  const scannerRef = useRef<HTMLDivElement | null>(null);
 
-  // useEffect(() => {
-  //   if (scannerRef.current) {
-  //     Quagga.init(
-  //       {
-  //         inputStream: {
-  //           type: 'LiveStream',
-  //           target: scannerRef.current, // Attach camera to this DOM element
-  //           constraints: {
-  //             width: 1280, // Adjust for higher resolution
-  //             height: 720,
-  //             facingMode: 'environment', // Use back camera
-  //           },
-  //         },
-  //         decoder: {
-  //           readers: [
-  //             'ean_reader',        // EAN-13 barcode type
-  //             'code_128_reader',   // Code-128 barcode type
-  //             'ean_8_reader',      // EAN-8 barcode type
-  //             'upc_reader',        // UPC-A barcode type
-  //           ],
-  //         },
-  //         locate: true, // Set to true for locating barcode more efficiently
-  //       },
-  //       (err) => {
-  //         if (err) {
-  //           console.error('Error initializing Quagga:', err);
-  //         } else {
-  //           console.log('Quagga initialized successfully');
-  //           Quagga.start();
-  //         }
-  //       }
-  //     );
+  useEffect(() => {
+    if (!scannerRef.current) return;
 
-  //     // Barcode detected handler
-  //     Quagga.onDetected((result) => {
-  //       console.log('Detection result:', result);
-  //       if (result && result.codeResult && result.codeResult.code) {
-  //         handleDetected(result.codeResult.code);
-  //         Quagga.stop(); // Stop scanning after a barcode is detected
-  //       }
-  //     });
+    // Initialize the html5-qrcode scanner
+    const scanner = new Html5QrcodeScanner(
+      scannerRef.current.id,
+      { fps: 10, qrbox: { width: 300, height: 300 } },
+      false
+    );
 
-  //     return () => {
-  //       Quagga.stop(); // Stop the scanner when component unmounts
-  //     };
-  //   }
-  // }, []);
+    // Start scanning for barcodes
+    scanner.render(handleDetected, handleError);
 
-  // const handleDetected = async (barcode: string) => {
-  //   console.log('Detected barcode:', barcode);
-  //   try {
-  //     const response = await axios.post('/api/barcode-lookup', { barcode });
-  //     if (response.data.food) {
-  //       setFoodInfo(response.data.food);
-  //       setError('');
-  //     } else {
-  //       setError('No food found for the barcode');
-  //     }
-  //   } catch (err) {
-  //     setError('Error fetching food data');
-  //   }
-  // };
+    return () => {
+      scanner.clear();
+    };
+  }, []);
+
+  const handleDetected = async (barcode: string) => {
+    console.log('Detected barcode:', barcode);
+
+    try {
+      const response = await axios.post('/api/barcode-lookup', { barcode });
+      if (response.data.product) {
+        setProductInfo(response.data.product);
+        setError('');
+      } else {
+        setError('No product found for the barcode');
+      }
+    } catch (err) {
+      setError('Error fetching product data');
+    }
+  };
+
+  const handleError = (err: any) => {
+    console.error('Error scanning barcode:', err);
+  };
 
   return (
-    <div className='min-h-screen text-3xl items-center justify-center flex flex-col'>
-    
-     <h1>Scan a Barcode to get detailed information </h1>
-      
-      <div>
-        <p className='text-muted-foreground'>Page currently under construction <Construction className='inline' fill='yellow' /></p>
-      </div>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+      <h1 className="text-3xl font-bold text-gray-800 mb-6">Scan a Barcode</h1>
 
+      {/* Scanning area */}
+      <div ref={scannerRef} id="barcode-scanner" className="w-full max-w-md h-96 border-4 border-gray-800 rounded-lg shadow-lg mb-4 flex items-center justify-center" />
 
+      {/* Error message */}
+      {error && <p className="text-red-500 text-lg mt-4">{error}</p>}
 
+      {/* Product Information */}
+      {productInfo && (
+        <div className="bg-teal-100 text-teal-700 p-4 rounded-lg shadow-md mt-4 w-full max-w-md text-center">
+          <h2 className="text-xl font-semibold mb-2">Product Information</h2>
+          <p className="text-lg">Name: {productInfo.name}</p>
+          <p className="text-lg">Description: {productInfo.description}</p>
+        </div>
+      )}
     </div>
   );
 };

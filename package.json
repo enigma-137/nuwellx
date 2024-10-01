@@ -37,6 +37,7 @@
     "clsx": "^2.0.0",
     "formidable": "^3.5.1",
     "framer-motion": "^11.9.0",
+    "html5-qrcode": "^2.3.8",
     "lucide-react": "^0.303.0",
     "mongodb": "^6.3.0",
     "mongoose": "^8.0.4",
