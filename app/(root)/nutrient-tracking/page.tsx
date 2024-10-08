@@ -8,9 +8,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useToast } from "@/hooks/use-toast"
-import { Loader2, Info } from "lucide-react"
+import { Loader2, Info, Plus, Archive } from "lucide-react"
 import { NutritionChart } from '@/components/Chart'
-// import { CalorieCalculator } from '@/components/CalorieCalulator'
 import {
   Dialog,
   DialogContent,
@@ -35,6 +34,17 @@ interface NutritionSuggestion {
   reasoning: string
 }
 
+interface NutritionSummary {
+  id: string
+  startDate: string
+  endDate: string
+  totalCalories: number
+  totalProtein: number
+  totalCarbs: number
+  totalFat: number
+  entryCount: number
+}
+
 export default function NutritionTracker() {
   const [entries, setEntries] = useState<NutritionEntry[]>([])
   const [newEntry, setNewEntry] = useState({ food: '', protein: 0, carbs: 0, fat: 0 })
@@ -42,6 +52,8 @@ export default function NutritionTracker() {
   const [isLoading, setIsLoading] = useState(false)
   const { isLoaded, isSignedIn, user } = useUser()
   const [viewMode, setViewMode] = useState<'daily' | 'weekly' | 'monthly'>('daily')
+  const [showInputForm, setShowInputForm] = useState(false)
+  const [summaries, setSummaries] = useState<NutritionSummary[]>([])
   const { toast } = useToast()
 
   useEffect(() => {
@@ -63,6 +75,43 @@ export default function NutritionTracker() {
       toast({
         title: "Error",
         description: "Failed to fetch nutrition entries. Please try again.",
+        variant: "destructive",
+      })
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  // hhsd
+  const fetchSummaries = async () => {
+    try {
+      const response = await axios.get('/api/nutrition-summaries')
+      setSummaries(response.data.summaries)
+    } catch (error) {
+      console.error('Error fetching nutrition summaries:', error)
+      toast({
+        title: "Error",
+        description: "Failed to fetch nutrition summaries. Please try again.",
+        variant: "destructive",
+      })
+    }
+  }
+
+  const handleDataManagement = async () => {
+    setIsLoading(true)
+    try {
+      await axios.post('/api/manage-nutrition-data')
+      toast({
+        title: "Data Management",
+        description: "Your nutrition data has been summarized and old entries have been removed.",
+      })
+      await fetchEntries()
+      await fetchSummaries()
+    } catch (error) {
+      console.error('Error managing nutrition data:', error)
+      toast({
+        title: "Error",
+        description: "Failed to manage nutrition data. Please try again.",
         variant: "destructive",
       })
     } finally {
@@ -105,6 +154,7 @@ export default function NutritionTracker() {
       })
       setNewEntry({ food: '', protein: 0, carbs: 0, fat: 0 })
       await fetchEntries()
+      setShowInputForm(false)
     } catch (error) {
       console.error('Error adding nutrition entry:', error)
       toast({
@@ -135,7 +185,9 @@ export default function NutritionTracker() {
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6">Nutrition Tracker</h1>
 
-      <div className="mb-4">
+      
+
+      <div className="mb-4 flex justify-between items-center">
         <Select value={viewMode} onValueChange={(value: 'daily' | 'weekly' | 'monthly') => setViewMode(value)}>
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Select view" />
@@ -146,110 +198,119 @@ export default function NutritionTracker() {
             <SelectItem value="monthly">Monthly View</SelectItem>
           </SelectContent>
         </Select>
+        <Button onClick={() => setShowInputForm(true)} disabled={showInputForm}>
+          <Plus className="mr-2 h-4 w-4" /> Add New Entry
+        </Button>
+
+        <div className="mb-4 flex justify-between items-center">
+        
+        {/* <Button onClick={handleDataManagement} disabled={isLoading}>
+          <Archive className="mr-2 h-4 w-4" /> 
+        </Button> */}
+      </div>
       </div>
       
-      <Card className="mb-6">
-        <CardHeader>
-          <CardTitle className="flex items-center justify-between">
-            What did you eat today?
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button variant="outline" size="icon">
-                  <Info className="h-4 w-4" />
+      {showInputForm && (
+        <Card className="mb-6">
+          <CardHeader>
+            <CardTitle className="flex items-center justify-between">
+              What did you eat today?
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="outline" size="icon">
+                    <Info className="h-4 w-4" />
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Calorie Calculation</DialogTitle>
+                    <DialogDescription>
+                      Calories are automatically calculated based on the macronutrients you input:
+                      <ul className="list-disc list-inside mt-2">
+                        <li>1g of Protein = 4 calories</li>
+                        <li>1g of Carbohydrates = 4 calories</li>
+                        <li>1g of Fat = 9 calories</li>
+                      </ul>
+                      Total Calories = (Protein * 4) + (Carbs * 4) + (Fat * 9)
+                    </DialogDescription>
+                  </DialogHeader>
+                </DialogContent>
+              </Dialog>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label htmlFor="food" className="block text-sm font-medium ">Food Item</label>
+                <Input
+                  id="food"
+                  name="food"
+                  value={newEntry.food}
+                  onChange={handleInputChange}
+                  placeholder="Food Item"
+                  required
+                />
+              </div>
+
+              <div>
+                <label htmlFor="protein" className="block text-sm font-medium ">Protein (g)</label>
+                <Input
+                  id="protein"
+                  name="protein"
+                  type="number"
+                  value={newEntry.protein}
+                  onChange={handleInputChange}
+                  placeholder="Protein (g)"
+                  required
+                />
+              </div>
+
+              <div>
+                <label htmlFor="carbs" className="block text-sm font-medium">Carbs (g)</label>
+                <Input
+                  id="carbs"
+                  name="carbs"
+                  type="number"
+                  value={newEntry.carbs}
+                  onChange={handleInputChange}
+                  placeholder="Carbs (g)"
+                  required
+                />
+              </div>
+
+              <div>
+                <label htmlFor="fat" className="block text-sm font-medium ">Fat (g)</label>
+                <Input
+                  id="fat"
+                  name="fat"
+                  type="number"
+                  value={newEntry.fat}
+                  onChange={handleInputChange}
+                  placeholder="Fat (g)"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium">Calculated Calories</label>
+                <p className="text-lg font-semibold">
+                  {calculateCalories(newEntry.protein, newEntry.carbs, newEntry.fat)}
+                </p>
+              </div>
+
+              <div className="flex justify-between">
+                <Button type="submit" disabled={isLoading}>
+                  {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+                  Add Entry
                 </Button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Calorie Calculation</DialogTitle>
-                  <DialogDescription>
-                    Calories are automatically calculated based on the macronutrients you input:
-                    <ul className="list-disc list-inside mt-2">
-                      <li>1g of Protein = 4 calories</li>
-                      <li>1g of Carbohydrates = 4 calories</li>
-                      <li>1g of Fat = 9 calories</li>
-                    </ul>
-                    Total Calories = (Protein * 4) + (Carbs * 4) + (Fat * 9)
-                  </DialogDescription>
-                </DialogHeader>
-              </DialogContent>
-            </Dialog>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label htmlFor="food" className="block text-sm font-medium ">Food Item</label>
-              <Input
-                id="food"
-                name="food"
-                value={newEntry.food}
-                onChange={handleInputChange}
-                placeholder="Food Item"
-               
-                required
-              />
-            </div>
-
-            <div>
-              <label htmlFor="protein" className="block text-sm font-medium ">Protein (g)</label>
-              <Input
-                id="protein"
-                name="protein"
-                type="number"
-                value={newEntry.protein}
-                onChange={handleInputChange}
-                placeholder="Protein (g)"
-               
-                required
-              />
-            </div>
-
-            <div>
-              <label htmlFor="carbs" className="block text-sm font-medium">Carbs (g)</label>
-              <Input
-                id="carbs"
-                name="carbs"
-                type="number"
-                value={newEntry.carbs}
-                onChange={handleInputChange}
-                placeholder="Carbs (g)"
-         
-                required
-              />
-            </div>
-
-            <div>
-              <label htmlFor="fat" className="block text-sm font-medium ">Fat (g)</label>
-              <Input
-                id="fat"
-                name="fat"
-                type="number"
-                value={newEntry.fat}
-                onChange={handleInputChange}
-                placeholder="Fat (g)"
-               
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium">Calculated Calories</label>
-              <p className="text-lg font-semibold">
-                {calculateCalories(newEntry.protein, newEntry.carbs, newEntry.fat)}
-              </p>
-            </div>
-
-            <Button type="submit" disabled={isLoading}>
-              {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-              Add Entry
-            </Button>
-          </form>
-
-          {/* <div className="mt-4">
-            <CalorieCalculator />
-          </div> */}
-        </CardContent>
-      </Card>
+                <Button type="button" variant="outline" onClick={() => setShowInputForm(false)}>
+                  Cancel
+                </Button>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+      )}
 
       <Card className="mb-6">
         <CardHeader>
