@@ -18,6 +18,17 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 interface NutritionEntry {
   id: string
@@ -59,6 +70,7 @@ export default function NutritionTracker() {
   useEffect(() => {
     if (isLoaded && isSignedIn) {
       fetchEntries()
+      fetchSummaries()
     }
   }, [isLoaded, isSignedIn, viewMode])
 
@@ -187,7 +199,7 @@ export default function NutritionTracker() {
 
       
 
-      <div className="mb-4 flex justify-between items-center">
+      <div className="mb-4 flex flex-col justify-between items-start md:items-center md:flex-row gap-3">
         <Select value={viewMode} onValueChange={(value: 'daily' | 'weekly' | 'monthly') => setViewMode(value)}>
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Select view" />
@@ -202,11 +214,32 @@ export default function NutritionTracker() {
           <Plus className="mr-2 h-4 w-4" /> Add New Entry
         </Button>
 
-        <div className="mb-4 flex justify-between items-center">
+        <div className="mb-4 flex justify-center items-center">
         
-        {/* <Button onClick={handleDataManagement} disabled={isLoading}>
-          <Archive className="mr-2 h-4 w-4" /> 
-        </Button> */}
+        <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="outline">
+                <Archive className=" h-4 w-4" /> 
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action will summarize your nutrition data older than one month and remove the detailed entries. This process cannot be undone.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={handleDataManagement} disabled={isLoading}>
+                  {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+                  Confirm
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+
+
       </div>
       </div>
       
@@ -382,6 +415,36 @@ export default function NutritionTracker() {
         </CardHeader>
         <CardContent>
           <NutritionChart entries={entries} />
+        </CardContent>
+      </Card>
+
+
+
+      {/* history */}
+
+      <Card className="mt-6">
+        <CardHeader>
+          <CardTitle>Historical Nutrition Summaries</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {summaries.length > 0 ? (
+            <div className="space-y-4">
+              {summaries.map((summary) => (
+                <div key={summary.id} className="border-b pb-2">
+                  <p className="font-semibold">
+                    {new Date(summary.startDate).toLocaleDateString()} - {new Date(summary.endDate).toLocaleDateString()}
+                  </p>
+                  <p>Total Entries: {summary.entryCount}</p>
+                  <p>Average Daily Calories: {(summary.totalCalories / 30).toFixed(2)}</p>
+                  <p>Average Daily Protein: {(summary.totalProtein / 30).toFixed(2)}g</p>
+                  <p>Average Daily Carbs: {(summary.totalCarbs / 30).toFixed(2)}g</p>
+                  <p>Average Daily Fat: {(summary.totalFat / 30).toFixed(2)}g</p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p>No historical summaries available yet.</p>
+          )}
         </CardContent>
       </Card>
     </div>
