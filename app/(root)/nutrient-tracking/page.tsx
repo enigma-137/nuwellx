@@ -226,7 +226,7 @@ export default function NutritionTracker() {
               <AlertDialogHeader>
                 <AlertDialogTitle>Are you sure?</AlertDialogTitle>
                 <AlertDialogDescription>
-                  This action will summarize your nutrition data older than one month and remove the detailed entries. This process cannot be undone.
+                  This action will summarize your nutrition data older than one week and remove the detailed entries. This process cannot be undone.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>

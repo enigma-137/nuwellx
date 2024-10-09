@@ -1,30 +1,31 @@
-
+// app/api/manage-nutrition-data/route.ts
 
 import { NextRequest, NextResponse } from 'next/server'
 import { PrismaClient } from '@prisma/client'
 import { auth } from '@clerk/nextjs/server'
-
 const prisma = new PrismaClient()
 
 export async function POST(req: NextRequest) {
+  console.log("Manage nutrition data route hit")
   const { userId } = auth()
   
   if (!userId) {
+    console.log("Unauthorized access attempt")
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
   try {
-    // Get the date one month ago
-    const oneMonthAgo = new Date()
-    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1)
+    // Get the date one week ago
+    const oneWeekAgo = new Date()
+    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7)
 
-    // Summarize data older than one month
+    console.log("Fetching data to summarize")
     const summarizedData = await prisma.nutritionEntry.groupBy({
       by: ['userId'],
       where: {
         userId: userId,
         date: {
-          lt: oneMonthAgo
+          lt: oneWeekAgo
         }
       },
       _sum: {
@@ -41,12 +42,12 @@ export async function POST(req: NextRequest) {
     console.log("Summarized data:", summarizedData)
 
     if (summarizedData.length > 0) {
-      // Create a summary entry
+      console.log("Creating summary entry")
       await prisma.nutritionSummary.create({
         data: {
           userId: userId,
-          startDate: new Date(oneMonthAgo.getFullYear(), oneMonthAgo.getMonth(), 1),
-          endDate: new Date(oneMonthAgo.getFullYear(), oneMonthAgo.getMonth() + 1, 0),
+          startDate: new Date(oneWeekAgo.getFullYear(), oneWeekAgo.getMonth(), oneWeekAgo.getDate() - 6), // Start of the week
+          endDate: oneWeekAgo,
           totalCalories: summarizedData[0]._sum.calories || 0,
           totalProtein: summarizedData[0]._sum.protein || 0,
           totalCarbs: summarizedData[0]._sum.carbs || 0,
@@ -56,16 +57,17 @@ export async function POST(req: NextRequest) {
       })
 
       console.log("Deleting old entries")
-
-      // Delete the old entries
-      await prisma.nutritionEntry.deleteMany({
+      const deleteResult = await prisma.nutritionEntry.deleteMany({
         where: {
           userId: userId,
           date: {
-            lt: oneMonthAgo
+            lt: oneWeekAgo
           }
         }
       })
+      console.log("Deleted entries count:", deleteResult.count)
+    } else {
+      console.log("No data to summarize")
     }
 
     return NextResponse.json({ message: 'Data management completed successfully' })
