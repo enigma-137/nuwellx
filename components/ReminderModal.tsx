@@ -50,14 +50,14 @@ export function ReminderModal() {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className='bg-white p-2'>
+      <DialogContent className='p-2'>
         <DialogHeader>
           <DialogTitle className='p-3'>Important Reminder <InfoIcon className='inline'/>  </DialogTitle>
           <DialogDescription>
             While our AI-powered features are designed to be helpful, please remember:
           </DialogDescription>
         </DialogHeader>
-        <div className="py-2 bg-white">
+        <div className="py-2">
           <ul className="list-disc pl-6 space-y-2">
             <li>AI can make mistakes or provide inaccurate information.</li>
             <li>Always verify important information from reliable sources.</li>
