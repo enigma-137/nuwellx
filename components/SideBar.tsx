@@ -2,7 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { User, MessageSquare, LogOut, LucideCookie, ScanFaceIcon, Info, CookingPot, XIcon, Flame, BarChartBig } from 'lucide-react'
+import { User, MessageSquare, LogOut, LucideCookie, ScanFaceIcon, Info, CookingPot, XIcon, Flame, BarChartBig, Home } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { SignOutButton, UserButton, useUser } from '@clerk/nextjs'
 import { Moon, Sun } from "lucide-react"
@@ -93,6 +93,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
 
             <ul className="space-y-2">
               {[
+                 { path: "/dashboard", label: "Home", icon: Home },
                 { path: "/scan", label: "Scan", icon: ScanFaceIcon },
                 { path: "/dietician", label: "AI Dietician", icon: MessageSquare },
                 { path: "/scannedfoods", label: "My Foods", icon: LucideCookie },

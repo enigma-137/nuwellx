@@ -78,3 +78,18 @@ model NutritionSummary {
   entryCount    Int
   createdAt     DateTime @default(now())
 }
+
+
+model SavedRecipe {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String
+  name        String
+  ingredients String[]
+  instructions String
+  prepTime    Int
+  cookTime    Int
+  servings    Int
+  savedAt     DateTime @default(now())
+
+  @@index([userId])
+}

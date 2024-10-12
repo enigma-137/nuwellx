@@ -60,3 +60,29 @@
     --chart-5: 340 75% 55%;
   }
 }
+
+.prose-sm {
+  --tw-prose-body: 14px;
+  --tw-prose-headings: 18px;
+  --tw-prose-lead: 16px;
+  --tw-prose-spacing: 0.8em;
+  --tw-prose-line-height: 1.4;
+}
+.prose {
+  --tw-prose-headings: 1.5rem;
+  --tw-prose-lead: 1.125rem;
+  --tw-prose-links: #3b82f6;
+  --tw-prose-line-height: 1.75;
+  --tw-prose-invert-links: #ffffff;
+}
+
+.prose img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.prose p {
+  margin-bottom: 1rem;
+}

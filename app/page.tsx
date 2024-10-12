@@ -11,6 +11,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { ContactForm } from '@/components/ContactForm';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -22,7 +23,7 @@ export default function Home() {
   if (!mounted) {
     return null; 
   }
-
+const router = useRouter()
   return (
     <div className="min-h-screen bg-blue-50">
       {/* Navbar */}
@@ -89,10 +90,11 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            <Link href="/scan">
+
+            onClick={()=> {router.push('/dashboard')}}
+          >  
               Get Started Now
-            </Link>
+            
           </motion.button>
         </div>
       

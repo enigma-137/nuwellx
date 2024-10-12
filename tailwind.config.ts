@@ -49,7 +49,46 @@ module.exports = {
 		  md: "calc(var(--radius) - 2px)",
 		  sm: "calc(var(--radius) - 4px)",
 		},
+		typography: () => ({
+		  DEFAULT: {
+			css: {
+			  maxWidth: '65ch',
+			  color: 'inherit',
+			  p: {
+				fontSize: '1rem',
+				lineHeight: '1.75',
+			  },
+			  h1: {
+				fontSize: '2rem',
+				marginTop: '1.5em',
+				marginBottom: '0.5em',
+			  },
+			  h2: {
+				fontSize: '1.5rem',
+				marginTop: '1.25em',
+				marginBottom: '0.5em',
+			  },
+			  h3: {
+				fontSize: '1.25rem',
+				marginTop: '1em',
+				marginBottom: '0.5em',
+			  },
+			  'ul, ol': {
+				paddingLeft: '1.25em',
+			  },
+			  li: {
+				marginTop: '0.25em',
+				marginBottom: '0.25em',
+			  },
+			  img: {
+				marginTop: '1em',
+				marginBottom: '1em',
+			  },
+			},
+		  },
+		}),
 	  },
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [require("tailwindcss-animate"), require('@tailwindcss/typography')],
   }
+  
