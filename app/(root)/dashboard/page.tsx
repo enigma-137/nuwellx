@@ -73,7 +73,7 @@ export default function Dashboard() {
             </Button>
             <Button 
               className="h-24 text-lg"
-              onClick={() => router.push('/nutrition-tracker')}
+              onClick={() => router.push('/nutrient-tracking')}
             >
               <BarChart2 className="mr-2 h-6 w-6" />
               Nutrition Tracker

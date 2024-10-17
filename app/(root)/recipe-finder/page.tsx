@@ -158,14 +158,14 @@ export default function RecipeFinder() {
     }
   }
 
-  const cardColors = [
-    'bg-gradient-to-br from-pink-300 to-pink-600', // Softer pink for light, vibrant pink for dark
-    'bg-gradient-to-br from-sky-400 to-blue-600', // Light blue transitioning to a deeper blue
-    'bg-gradient-to-br from-green-400 to-green-600', // Bright green to a deeper green for freshness
-    'bg-gradient-to-br from-purple-300 to-purple-500', // Lighter purple to a rich purple
-    'bg-gradient-to-br from-yellow-400 to-yellow-600', // Bright yellow to a more golden yellow
-    'bg-gradient-to-br from-teal-300 to-teal-500', // Soft teal transitioning to a deeper teal
-  ];
+  // const cardColors = [
+  //   'bg-gradient-to-br from-pink-300 to-pink-600', // Softer pink for light, vibrant pink for dark
+  //   'bg-gradient-to-br from-sky-400 to-blue-600', // Light blue transitioning to a deeper blue
+  //   'bg-gradient-to-br from-green-400 to-green-600', // Bright green to a deeper green for freshness
+  //   'bg-gradient-to-br from-purple-300 to-purple-500', // Lighter purple to a rich purple
+  //   'bg-gradient-to-br from-yellow-400 to-yellow-600', // Bright yellow to a more golden yellow
+  //   'bg-gradient-to-br from-teal-300 to-teal-500', // Soft teal transitioning to a deeper teal
+  // ];
   
 
   const saveRecipe = async (recipe: Recipe) => {
@@ -258,7 +258,7 @@ export default function RecipeFinder() {
             <ScrollArea className="w-full whitespace-nowrap  rounded-md border">
               <div className="flex w-max  space-x-4 p-4">
                 {recipes.slice(0, 3).map((recipe, index) => (
-                  <Card key={recipe.id} className={`w-[300px] ${cardColors[index % cardColors.length]}`}>
+                  <Card key={recipe.id} className={`w-[300px]`}>
                     <CardHeader>
                       <CardTitle className="text-lg font-bold">{recipe.name}</CardTitle>
                     </CardHeader>

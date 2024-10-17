@@ -50,7 +50,7 @@ export function ReminderModal() {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className='p-2'>
+      <DialogContent className='p-8'>
         <DialogHeader>
           <DialogTitle className='p-3'>Important Reminder <InfoIcon className='inline'/>  </DialogTitle>
           <DialogDescription>
