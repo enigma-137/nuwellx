@@ -23,16 +23,16 @@ model ChatMessage {
 }
 
 model Recipe {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  ingredients String[]
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  ingredients  String[]
   instructions String
-  prepTime    Int
-  cookTime    Int
-  servings    Int
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  userId String
+  prepTime     Int
+  cookTime     Int
+  servings     Int
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  userId       String
 }
 
 model NutritionEntry {
@@ -49,7 +49,7 @@ model NutritionEntry {
 
 model NutritionGoal {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId    String @unique
+  userId    String   @unique
   calories  Int
   protein   Float
   carbs     Float
@@ -59,15 +59,15 @@ model NutritionGoal {
 }
 
 model UserPreference {
-  id            String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId        String   @unique
-  hasSeenAIReminder Boolean @default(false)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String   @unique
+  hasSeenAIReminder Boolean  @default(false)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 }
 
 model NutritionSummary {
-    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
   userId        String
   startDate     DateTime
   endDate       DateTime
@@ -79,17 +79,20 @@ model NutritionSummary {
   createdAt     DateTime @default(now())
 }
 
-
 model SavedRecipe {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId      String
-  name        String
-  ingredients String[]
-  instructions String
-  prepTime    Int
-  cookTime    Int
-  servings    Int
-  savedAt     DateTime @default(now())
+  id                       String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId                   String
+  food_name                String
+  ingredients              Json
+  preparation_instructions Json
+  preparation_time         String
+  cooking_time             String
+  total_time               String
+  course                   String
+  cuisine                  String
+  calories                 Int
+  servings                 Int
+  savedAt                  DateTime @default(now())
 
   @@index([userId])
 }

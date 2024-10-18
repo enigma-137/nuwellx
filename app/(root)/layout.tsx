@@ -38,7 +38,7 @@ export default function ClientLayout({
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-[75vh]">
       <div className="flex lg:hidden justify-between items-center p-4">
         <Button
           onClick={() => setIsSidebarOpen(true)}

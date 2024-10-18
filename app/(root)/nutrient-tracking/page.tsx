@@ -190,7 +190,7 @@ export default function NutritionTracker() {
   }, [entries])
 
   if (!isLoaded || !isSignedIn) {
-    return <div className='min-h-screen flex items-center justify-center'>Please wait while we check your auth status....</div>
+    return <div className='min-h-[75vh] flex items-center justify-center'>Please wait while we check your auth status....</div>
   }
 
   return (

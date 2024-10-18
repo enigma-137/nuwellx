@@ -43,7 +43,7 @@ export default function Dashboard() {
     }
   ]
   return (
-    <div className="container min-h-screen mx-auto p-4">
+    <div className="container min-h-[75vh] mx-auto p-4">
       <Card className="w-full max-w-4xl mx-auto">
         <CardHeader>
           <CardTitle className="text-base font-medium">

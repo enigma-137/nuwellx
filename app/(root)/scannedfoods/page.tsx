@@ -73,7 +73,7 @@ export default function FoodHistory() {
   }
 
   return (
-    <Card className="w-full h-screen max-w-2xl mx-auto">
+    <Card className="w-full min-h-[90vh] max-w-2xl mx-auto">
       <CardHeader>
         <CardTitle>Your Scanned Food</CardTitle>
         <CardDescription>View and analyze your past food scans</CardDescription>

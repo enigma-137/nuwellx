@@ -9,24 +9,13 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Toast, ToastProvider, ToastViewport } from "@/components/ui/toast"
 import { useToast } from "@/hooks/use-toast"
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-
 import axios from 'axios'
 import { useRouter } from 'next/navigation';
-
-interface Recipe {
-  id: string
-  name: string
-  ingredients: string[]
-  instructions: string
-  prepTime: number
-  cookTime: number
-  servings: number
-
-}
+import { recipes as localRecipes, Recipe } from '@/data/recipeData'
 
 export default function RecipeFinder() {
   const [ingredients, setIngredients] = useState<string[]>([])
-  const [recipes, setRecipes] = useState<Recipe[]>([])
+  const [matchedRecipes, setMatchedRecipes] = useState<Recipe[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const { toast } = useToast()
@@ -83,7 +72,7 @@ export default function RecipeFinder() {
     setIngredients(prevIngredients => prevIngredients.filter(ingredient => ingredient !== ingredientToRemove))
   }
 
-  const findRecipes = async () => {
+  const findRecipes = () => {
     if (ingredients.length === 0) {
       toast({
         title: "No ingredients",
@@ -94,86 +83,48 @@ export default function RecipeFinder() {
     }
 
     setIsLoading(true)
-    try {
-      const response = await axios.post<{ recipes: Recipe[] }>('/api/find-recipes', { ingredients })
-      setRecipes(response.data.recipes)
-      if (response.data.recipes.length === 0) {
-        toast({
-          title: "No recipes found",
-          description: "We couldn't find any recipes with your ingredients. Try adding more ingredients.",
-        })
-      }
-    } catch (error) {
-      console.error('Error finding recipes:', error)
-      if (axios.isAxiosError(error) && error.response) {
-        const errorData = error.response.data
-        toast({
-          title: "Error",
-          description: errorData.error + (errorData.details ? `: ${errorData.details}` : ''),
-          variant: "destructive",
-        })
-        if (errorData.aiResponse) {
-          console.log('AI Response:', errorData.aiResponse)
-        }
-      } else {
-        toast({
-          title: "Error",
-          description: "An unexpected error occurred. Please try again.",
-          variant: "destructive",
-        })
-      }
-    } finally {
-      setIsLoading(false)
+
+    // Simple matching algorithm
+    const matchedRecipes = localRecipes.filter(recipe => {
+      const recipeIngredients = recipe.ingredients.map(ing => ing.name.toLowerCase())
+      return ingredients.some(ing => recipeIngredients.includes(ing.toLowerCase()))
+    })
+
+    // Sort recipes by the number of matching ingredients
+    matchedRecipes.sort((a, b) => {
+      const aMatches = a.ingredients.filter(ing => 
+        ingredients.includes(ing.name.toLowerCase())).length
+      const bMatches = b.ingredients.filter(ing => 
+        ingredients.includes(ing.name.toLowerCase())).length
+      return bMatches - aMatches
+    })
+
+    setMatchedRecipes(matchedRecipes.slice(0, 3))  // Get top 3 matches
+
+    if (matchedRecipes.length === 0) {
+      toast({
+        title: "No recipes found",
+        description: "We couldn't find any recipes with your ingredients. Try adding more ingredients.",
+      })
     }
+
+    setIsLoading(false)
   }
 
-  // const addToTracker = async (recipe: Recipe) => {
-  //   try {
-  //     await axios.post('/api/nutrition-entries', {
-  //       food: recipe.name,
-  //       calories: recipe.calories,
-  //       protein: recipe.protein,
-  //       carbs: recipe.carbs,
-  //       fat: recipe.fat
-  //     })
-  //     toast({
-  //       title: "Recipe Added",
-  //       description: `${recipe.name} has been added to your nutrition tracker.`,
-  //     })
-  //   } catch (error) {
-  //     console.error('Error adding recipe to tracker:', error)
-  //     toast({
-  //       title: "Error",
-  //       description: "Failed to add recipe to tracker. Please try again.",
-  //       variant: "destructive",
-  //     })
-  //   }
-  // }
-
   const resetRecipes = () => {
-    setRecipes([])
+    setMatchedRecipes([])
     setIngredients([])
     if (inputRef.current) {
       inputRef.current.value = ''
     }
   }
 
-  // const cardColors = [
-  //   'bg-gradient-to-br from-pink-300 to-pink-600', // Softer pink for light, vibrant pink for dark
-  //   'bg-gradient-to-br from-sky-400 to-blue-600', // Light blue transitioning to a deeper blue
-  //   'bg-gradient-to-br from-green-400 to-green-600', // Bright green to a deeper green for freshness
-  //   'bg-gradient-to-br from-purple-300 to-purple-500', // Lighter purple to a rich purple
-  //   'bg-gradient-to-br from-yellow-400 to-yellow-600', // Bright yellow to a more golden yellow
-  //   'bg-gradient-to-br from-teal-300 to-teal-500', // Soft teal transitioning to a deeper teal
-  // ];
-  
-
   const saveRecipe = async (recipe: Recipe) => {
     try {
       await axios.post('/api/saved-recipes', recipe)
       toast({
         title: "Recipe Saved",
-        description: `${recipe.name} has been saved to your recipes.`,
+        description: `${recipe.food_name} has been saved to your recipes.`,
       })
     } catch (error) {
       console.error('Error saving recipe:', error)
@@ -191,16 +142,14 @@ export default function RecipeFinder() {
 
   return (
     <ToastProvider>
-      <div className="container min-h-screen mx-auto p-4">
-      <p className='text-sm text-center mb-6'>Got Ingredients but you don't know what to eat? Upload a photo of them or enter them to get recipes</p>
+      <div className="container min-h-[75vh] mx-auto p-4">
+        <p className='text-sm text-center mb-6'>Got Ingredients but you don't know what to eat? Upload a photo of them or enter them to get recipes</p>
         <Button onClick={navigateToSavedRecipes} variant="outline">
           <BookmarkIcon className="mr-2 h-4 w-4" />
           Saved Recipes
         </Button>
-        {recipes.length === 0 ? (
+        {matchedRecipes.length === 0 ? (
           <>
-           
-
             <div className="mb-6 mt-6">
               <h2 className="text-xl mb-2 font-semibold">Upload Image of Ingredients</h2>
               <div className="w-full h-48 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center bg-blue-50 relative">
@@ -255,26 +204,30 @@ export default function RecipeFinder() {
         ) : (
           <>
             <Button onClick={resetRecipes} className="w-full mb-6">Find New Recipes</Button>
-            <ScrollArea className="w-full whitespace-nowrap  rounded-md border">
-              <div className="flex w-max  space-x-4 p-4">
-                {recipes.slice(0, 3).map((recipe, index) => (
-                  <Card key={recipe.id} className={`w-[300px]`}>
+            <ScrollArea className="w-full whitespace-nowrap rounded-md border">
+              <div className="flex w-max space-x-4 p-4">
+                {matchedRecipes.map((recipe, index) => (
+                  <Card key={recipe.food_name} className={`w-[300px]`}>
                     <CardHeader>
-                      <CardTitle className="text-lg font-bold">{recipe.name}</CardTitle>
+                      <CardTitle className="text-lg font-bold">{recipe.food_name}</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-sm mb-2">Prep: {recipe.prepTime} min | Cook: {recipe.cookTime} min | Servings: {recipe.servings}</p>
+                      <p className="text-sm mb-2">Prep: {recipe.preparation_time} | Cook: {recipe.cooking_time} | Servings: {recipe.servings}</p>
                       <h3 className="font-semibold mb-1 ">Ingredients:</h3>
                       <ScrollArea className="h-32 w-full rounded-md p-2">
                         <ul className="list-disc list-inside">
                           {recipe.ingredients.map((ingredient, idx) => (
-                            <li key={idx} className="text-sm">{ingredient}</li>
+                            <li key={idx} className="text-sm">{ingredient.name}: {ingredient.quantity}</li>
                           ))}
                         </ul>
                       </ScrollArea>
                       <h3 className="font-semibold mt-2 mb-1">Instructions:</h3>
                       <ScrollArea className="h-32 w-full rounded-md p-2">
-                        <p className="text-sm whitespace-normal">{recipe.instructions}</p>
+                        <ol className="list-decimal list-inside">
+                          {recipe.preparation_instructions.map((instruction, idx) => (
+                            <li key={idx} className="text-sm whitespace-normal">{instruction}</li>
+                          ))}
+                        </ol>
                       </ScrollArea>
                     </CardContent>
                     <CardFooter>
@@ -292,6 +245,3 @@ export default function RecipeFinder() {
     </ToastProvider>
   )
 }
-
-
-

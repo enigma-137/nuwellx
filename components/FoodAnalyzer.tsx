@@ -87,7 +87,7 @@ export function FoodAnalyzer() {
   }
 
   return (
-    <div className="container mx-auto p-4  min-h-screen">
+    <div className="container mx-auto p-4 min-h-[75vh]">
       <h2 className="text-3xl font-bold mb-6 text-center text-sky-600">Food Analyzer</h2>
       
       {!foodAnalysis ? (
