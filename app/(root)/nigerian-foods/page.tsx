@@ -88,7 +88,7 @@ export default function RecipeSearch() {
               </CardHeader>
               <CardContent>
                 <p>Preparation Time: {recipe.preparation_time}</p>
-                <p>Cooking Time: {recipe.cooking_time}</p>
+                <p>Cooking Time: {recipe.cooking_time}</p> <br />
                 <p>Servings: {recipe.servings}</p>
                 {recipe.calories && <p>Calories: {recipe.calories}</p>}
               </CardContent>
