@@ -6,21 +6,40 @@
   "description": "An all in one nutritional app",
   "lang": " Eng",
   "dir": "auto",
-  "theme_color": "##3b82f6",
+  "theme_color": "#3b82f6",
   "background_color": "#000000",
   "orientation": "any",
+  "screenshots": [
+    {
+      "src": "/screenshot.png",
+      "sizes":"any"
+    },
+    {
+      "src": "/Screenshot 2.png",
+      "sizes":"any"
+    }
+  ],
+  "display_override": "",
+  "protocol_handlers": [
+    {
+      "mail": "emmanuelonoja291@gmail.com"
+    }
+  ],
   "icons": [
     {
       "src": "windows11/SmallTile.scale-100.png",
-      "sizes": "71x71"
+      "sizes": "71x71",
+      "type": "png"
     },
     {
       "src": "windows11/SmallTile.scale-125.png",
-      "sizes": "89x89"
+      "sizes": "89x89",
+      "type": "png"
     },
     {
       "src": "windows11/SmallTile.scale-150.png",
-      "sizes": "107x107"
+      "sizes": "107x107",
+      "type": "png"
     },
     {
       "src": "windows11/SmallTile.scale-200.png",
