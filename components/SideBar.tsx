@@ -34,7 +34,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       {/* Overlay for small screens */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          className="fixed inset-0 bg-gray-900 bg-opacity-50 z-40 lg:hidden"
           onClick={onClose}
         />
       )}
@@ -43,7 +43,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       <div
         className={`fixed top-0 left-0 bottom-0 w-64 shadow-lg z-50 transform transition-transform duration-300 ease-in-out 
         ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
-        lg:translate-x-0   dark:bg-gray-900 border-r border-gray-800 dark:border-gray-800`}
+        lg:translate-x-0 bg-white  dark:bg-gray-900 border-r border-gray-800 dark:border-gray-800`}
       >
         <div className="flex flex-col h-full">
           <div className="p-4 border-b border-gray-200 dark:border-gray-700">
