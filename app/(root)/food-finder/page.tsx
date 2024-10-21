@@ -45,7 +45,8 @@ export default function FoodFinder() {
         ))}
       </div>
 
-      {/* Mobile view */}
+      {/* Mobile view  YAHH   npm install -g quikcommit-cli
+*/}
       <div className="md:hidden flex justify-center mb-6">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

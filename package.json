@@ -49,6 +49,7 @@
     "oauth-1.0a": "^2.2.6",
     "quagga": "^0.12.1",
     "query-string": "^8.1.0",
+    "quikcommit": "^1.0.0",
     "react": "^18",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18",
