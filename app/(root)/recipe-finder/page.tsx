@@ -150,6 +150,7 @@ export default function RecipeFinder() {
         </Button>
         {matchedRecipes.length === 0 ? (
           <>
+          {/* wahala */}
             <div className="mb-6 mt-6">
               <h2 className="text-xl mb-2 font-semibold">Upload Image of Ingredients</h2>
               <div className="w-full h-48 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center bg-blue-50 relative">
