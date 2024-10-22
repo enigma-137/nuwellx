@@ -21,6 +21,7 @@ export default function FoodFinder() {
     { value: 'recipeFinder', label: 'Recipe Finder' },
     { value: 'foodAnalyzer', label: 'Food Analyzer' },
     { value: 'recipeSearch', label: 'Search Recipes' },
+    // add more if you want 
   ]
 
   const handleTabChange = (value: 'recipeFinder' | 'foodAnalyzer' | 'recipeSearch') => {
