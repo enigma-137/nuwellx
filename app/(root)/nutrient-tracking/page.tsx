@@ -29,6 +29,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { Progress } from '@/components/ui/progress'
 
 interface NutritionEntry {
   id: string
@@ -65,7 +66,11 @@ export default function NutritionTracker() {
   const [viewMode, setViewMode] = useState<'daily' | 'weekly' | 'monthly'>('daily')
   const [showInputForm, setShowInputForm] = useState(false)
   const [summaries, setSummaries] = useState<NutritionSummary[]>([])
+  const [nutritionGoal, setNutritionGoal] = useState<'maintenance' | 'weight_loss' | 'weight_gain' | null>(null)
+  const [recommendedCalories, setRecommendedCalories] = useState(2000)
   const { toast } = useToast()
+
+  
 
   useEffect(() => {
     if (isLoaded && isSignedIn) {
@@ -108,6 +113,8 @@ export default function NutritionTracker() {
       })
     }
   }
+
+
 
   const handleDataManagement = async () => {
     setIsLoading(true)
@@ -189,15 +196,37 @@ export default function NutritionTracker() {
     }, { calories: 0, protein: 0, carbs: 0, fat: 0 })
   }, [entries])
 
-  if (!isLoaded || !isSignedIn) {
-    return <div className='min-h-[75vh] flex items-center justify-center'>Please wait while we check your auth status....</div>
+  // if (!isLoaded || !isSignedIn) {
+  //   return <div className='min-h-[75vh] flex items-center justify-center'>Please wait while we check your auth status....</div>
+
+
+  // }
+
+  useEffect(() => {
+    const calories = calculateRecommendedCalories(nutritionGoal)
+    setRecommendedCalories(calories)
+  }, [nutritionGoal])
+
+
+  const calculateRecommendedCalories = (goal: null | 'maintenance' | 'weight_loss' | 'weight_gain') => {
+    // This is a simplified calculation. later we might consider factors like age, gender, height, weight, and activity level.
+    switch (goal) {
+      case 'weight_loss':
+        return 1800
+      case 'weight_gain':
+        return 2500
+      default:
+        return 2000
+    }
   }
+
+
 
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6">Nutrition Tracker</h1>
 
-      
+
 
       <div className="mb-4 flex flex-col justify-between items-start md:items-center md:flex-row gap-3">
         <Select value={viewMode} onValueChange={(value: 'daily' | 'weekly' | 'monthly') => setViewMode(value)}>
@@ -210,16 +239,32 @@ export default function NutritionTracker() {
             <SelectItem value="monthly">Monthly View</SelectItem>
           </SelectContent>
         </Select>
+        {/* for goal selection */}
+        <Select 
+        value={nutritionGoal || undefined}
+        onValueChange={(value: 'maintenance' | 'weight_loss' | 'weight_gain') => setNutritionGoal(value)}
+      >
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder="Select goal" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="maintenance">Maintenance</SelectItem>
+          <SelectItem value="weight_loss">Weight Loss</SelectItem>
+          <SelectItem value="weight_gain">Weight Gain</SelectItem>
+        </SelectContent>
+      </Select>
+
+        {/* sd */}
         <Button onClick={() => setShowInputForm(true)} disabled={showInputForm}>
           <Plus className="mr-2 h-4 w-4" /> Add New Entry
         </Button>
 
         <div className="mb-4 flex justify-center items-center">
-        
-        <AlertDialog>
+
+          <AlertDialog>
             <AlertDialogTrigger asChild>
               <Button variant="outline">
-                <Archive className=" h-4 w-4" /> 
+                <Archive className=" h-4 w-4" />
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
@@ -240,9 +285,9 @@ export default function NutritionTracker() {
           </AlertDialog>
 
 
+        </div>
       </div>
-      </div>
-      
+
       {showInputForm && (
         <Card className="mb-6">
           <CardHeader>
@@ -345,7 +390,7 @@ export default function NutritionTracker() {
         </Card>
       )}
 
-      <Card className="mb-6">
+<Card className="mb-6">
         <CardHeader>
           <CardTitle>{viewMode.charAt(0).toUpperCase() + viewMode.slice(1)} Nutrition Summary</CardTitle>
         </CardHeader>
@@ -355,11 +400,35 @@ export default function NutritionTracker() {
               <Loader2 className="h-8 w-8 animate-spin" />
             </div>
           ) : (
-            <div className="space-y-2">
-              <p>Total Calories: {totalNutrition.calories.toFixed(2)}</p>
-              <p>Total Protein: {totalNutrition.protein.toFixed(2)}g</p>
-              <p>Total Carbs: {totalNutrition.carbs.toFixed(2)}g</p>
-              <p>Total Fat: {totalNutrition.fat.toFixed(2)}g</p>
+            <div className="space-y-4">
+              <div>
+                <p className="text-sm font-medium">Calories</p>
+                <div className="flex items-center justify-between">
+                  <Progress value={(totalNutrition.calories / recommendedCalories) * 100} className="w-4/5" />
+                  <span className="text-sm font-medium">{totalNutrition.calories.toFixed(0)} / {recommendedCalories}</span>
+                </div>
+              </div>
+              <div>
+                <p className="text-sm font-medium">Protein</p>
+                <div className="flex items-center justify-between">
+                  <Progress value={(totalNutrition.protein / (recommendedCalories * 0.3 / 4)) * 100} className="w-4/5" />
+                  <span className="text-sm font-medium">{totalNutrition.protein.toFixed(0)}g / {(recommendedCalories * 0.3 / 4).toFixed(0)}g</span>
+                </div>
+              </div>
+              <div>
+                <p className="text-sm font-medium">Carbs</p>
+                <div className="flex items-center justify-between">
+                  <Progress value={(totalNutrition.carbs / (recommendedCalories * 0.5 / 4)) * 100} className="w-4/5" />
+                  <span className="text-sm font-medium">{totalNutrition.carbs.toFixed(0)}g / {(recommendedCalories * 0.5 / 4).toFixed(0)}g</span>
+                </div>
+              </div>
+              <div>
+                <p className="text-sm font-medium">Fat</p>
+                <div className="flex items-center justify-between">
+                  <Progress value={(totalNutrition.fat / (recommendedCalories * 0.2 / 9)) * 100} className="w-4/5" />
+                  <span className="text-sm font-medium">{totalNutrition.fat.toFixed(0)}g / {(recommendedCalories * 0.2 / 9).toFixed(0)}g</span>
+                </div>
+              </div>
             </div>
           )}
         </CardContent>
