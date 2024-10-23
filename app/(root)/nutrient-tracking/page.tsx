@@ -30,6 +30,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Progress } from '@/components/ui/progress'
+import { UserProfileModal } from '@/components/UserProfileModal'
 
 interface NutritionEntry {
   id: string
@@ -66,8 +67,10 @@ export default function NutritionTracker() {
   const [viewMode, setViewMode] = useState<'daily' | 'weekly' | 'monthly'>('daily')
   const [showInputForm, setShowInputForm] = useState(false)
   const [summaries, setSummaries] = useState<NutritionSummary[]>([])
-  const [nutritionGoal, setNutritionGoal] = useState<'maintenance' | 'weight_loss' | 'weight_gain' | null>(null)
+  // const [nutritionGoal, setNutritionGoal] = useState<'maintenance' | 'weight_loss' | 'weight_gain' | null>(null)
   const [recommendedCalories, setRecommendedCalories] = useState(2000)
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false)
+  const [targetCalories, setTargetCalories] = useState(2000)
   const { toast } = useToast()
 
   
@@ -76,8 +79,31 @@ export default function NutritionTracker() {
     if (isLoaded && isSignedIn) {
       fetchEntries()
       fetchSummaries()
+      fetchUserProfile()
     }
   }, [isLoaded, isSignedIn, viewMode])
+
+
+
+  // user profile
+  const fetchUserProfile = async () => {
+    try {
+      const response = await axios.get('/api/user-profile')
+      if (response.data.targetCalories) {
+        setTargetCalories(response.data.targetCalories)
+        setRecommendedCalories(response.data.targetCalories)
+      }
+    } catch (error) {
+      console.error('Error fetching user profile:', error)
+    }
+  }
+
+  const handleProfileSave = (newTargetCalories: number) => {
+    setTargetCalories(newTargetCalories)
+    setRecommendedCalories(newTargetCalories)
+  }
+
+  // enteries
 
   const fetchEntries = async () => {
     setIsLoading(true)
@@ -202,23 +228,23 @@ export default function NutritionTracker() {
 
   // }
 
-  useEffect(() => {
-    const calories = calculateRecommendedCalories(nutritionGoal)
-    setRecommendedCalories(calories)
-  }, [nutritionGoal])
+  // useEffect(() => {
+  //   const calories = calculateRecommendedCalories(nutritionGoal)
+  //   setRecommendedCalories(calories)
+  // }, [nutritionGoal])
 
 
-  const calculateRecommendedCalories = (goal: null | 'maintenance' | 'weight_loss' | 'weight_gain') => {
-    // This is a simplified calculation. later we might consider factors like age, gender, height, weight, and activity level.
-    switch (goal) {
-      case 'weight_loss':
-        return 1800
-      case 'weight_gain':
-        return 2500
-      default:
-        return 2000
-    }
-  }
+  // const calculateRecommendedCalories = (goal: null | 'maintenance' | 'weight_loss' | 'weight_gain') => {
+  //   // This is a simplified calculation. later we might consider factors like age, gender, height, weight, and activity level.
+  //   switch (goal) {
+  //     case 'weight_loss':
+  //       return 1800
+  //     case 'weight_gain':
+  //       return 2500
+  //     default:
+  //       return 2000
+  //   }
+  // }
 
 
 
@@ -240,19 +266,9 @@ export default function NutritionTracker() {
           </SelectContent>
         </Select>
         {/* for goal selection */}
-        <Select 
-        value={nutritionGoal || undefined}
-        onValueChange={(value: 'maintenance' | 'weight_loss' | 'weight_gain') => setNutritionGoal(value)}
-      >
-        <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Select goal" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="maintenance">Maintenance</SelectItem>
-          <SelectItem value="weight_loss">Weight Loss</SelectItem>
-          <SelectItem value="weight_gain">Weight Gain</SelectItem>
-        </SelectContent>
-      </Select>
+        <Button onClick={() => setIsProfileModalOpen(true)}>
+          Set Nutrition Goal
+        </Button>
 
         {/* sd */}
         <Button onClick={() => setShowInputForm(true)} disabled={showInputForm}>
@@ -516,6 +532,13 @@ export default function NutritionTracker() {
           )}
         </CardContent>
       </Card>
+
+
+      <UserProfileModal
+        isOpen={isProfileModalOpen}
+        onClose={() => setIsProfileModalOpen(false)}
+        onSave={handleProfileSave}
+      />
     </div>
   )
 }

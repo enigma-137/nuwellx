@@ -75,7 +75,7 @@ const router = useRouter()
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            Track Your Nutrient Intake Easily
+            Your All In One Nutrional APP
           </motion.h2>
           <motion.p 
             className="text-xl md:text-2xl text-blue-100 mt-4 mb-8"

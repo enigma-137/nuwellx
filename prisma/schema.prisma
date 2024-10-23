@@ -79,6 +79,18 @@ model NutritionSummary {
   createdAt     DateTime @default(now())
 }
 
+
+model User {
+  id             String  @id @default(auto()) @map("_id") @db.ObjectId
+  clerkId        String  @unique
+  age            Int?
+  height         Float?
+  gender         String?
+  activityLevel  String?
+  targetCalories Int?
+ 
+}
+
 model SavedRecipe {
   id                       String   @id @default(auto()) @map("_id") @db.ObjectId
   userId                   String
