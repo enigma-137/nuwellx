@@ -33,17 +33,17 @@ export default function Home() {
   }
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen p-6">
-      <h1 className="text-2xl md:text-4xl font-bold mb-6 text-center">Nuwell Food Analyzer</h1>
+    <main className="flex flex-col items-center justify-center min-h-screen">
+      {/* <h1 className="text-2xl md:text-4xl font-bold mb-6 text-center">Food Analyzer</h1> */}
 
-      {!analysis && !loading && (
+      {/* {!analysis && !loading && (
         <p className="text-base md:text-lg font-medium mb-6 p-5 rounded-xl shadow-inner text-center">
           Place the camera on any food substance to get nutritional information
         </p>
-      )}
+      )} */}
 
       {!analysis && !loading && (
-        <div className="w-full max-w-md p-4 rounded-lg shadow-md border border-gray-200">
+        <div className="w-full max-w-md rounded-lg shadow-md ">
           <Camera onCapture={handleCapture} />
         </div>
       )}
