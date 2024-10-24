@@ -140,7 +140,7 @@ export function UserProfileModal({ isOpen, onClose, onSave }: UserProfileModalPr
             <label htmlFor="age" className="text-sm font-medium">Age</label>
             <Input id="age" value={age} onChange={(e) => setAge(e.target.value)} />
           </div>
-          <div className='flex flex-row gap-1'>
+          <div className='flex flex-row gap-2'>
             <div className="grid gap-2">
           
           <label htmlFor="height" className="text-sm font-medium">Height (cm)</label>
