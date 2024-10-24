@@ -10,7 +10,7 @@ const Page = () => {
   const router = useRouter()
 
   const handleRedirect = () => {
-    router.push('/home')
+    router.push('/analyser')
   }
 
   return (

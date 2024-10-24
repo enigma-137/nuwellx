@@ -33,15 +33,7 @@ export default function Home() {
   }
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen">
-      {/* <h1 className="text-2xl md:text-4xl font-bold mb-6 text-center">Food Analyzer</h1> */}
-
-      {/* {!analysis && !loading && (
-        <p className="text-base md:text-lg font-medium mb-6 p-5 rounded-xl shadow-inner text-center">
-          Place the camera on any food substance to get nutritional information
-        </p>
-      )} */}
-
+    <main className="flex flex-col items-center justify-center min-h-screen p-4">
       {!analysis && !loading && (
         <div className="w-full max-w-md rounded-lg shadow-md ">
           <Camera onCapture={handleCapture} />
@@ -55,15 +47,16 @@ export default function Home() {
       )}
 
       {capturedImageUrl && (
-        <div className="w-full max-w-xl mt-6">
-          <Image
-            src={capturedImageUrl}
-            alt="Captured food"
-            width={300}
-            height={200}
-            layout="responsive"
-            className="rounded-lg shadow-md"
-          />
+        <div className="w-full max-w-md mt-6 flex justify-center">
+          <div className="relative w-32 h-32">
+            <Image
+              src={capturedImageUrl}
+              alt="Captured food"
+              layout="fill"
+              objectFit="cover"
+              className="rounded-lg shadow-md"
+            />
+          </div>
         </div>
       )}
 
@@ -72,7 +65,7 @@ export default function Home() {
           <Results analysis={analysis} />
           <Button
             onClick={resetAnalysis}
-            className="mt-4 px-4 py-2 text-white rounded-lg shadow"
+            className="mt-4 px-4 py-2 my-4 text-white rounded-lg shadow"
           >
             Retake <CameraIcon className='inline ml-2'/>
           </Button>

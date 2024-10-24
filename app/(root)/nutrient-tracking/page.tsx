@@ -260,19 +260,19 @@ export default function NutritionTracker() {
             <SelectValue placeholder="Select view" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="daily">Daily View</SelectItem>
-            <SelectItem value="weekly">Weekly View</SelectItem>
-            <SelectItem value="monthly">Monthly View</SelectItem>
+            <SelectItem value="daily">Daily</SelectItem>
+            <SelectItem value="weekly">Weekly</SelectItem>
+            <SelectItem value="monthly">Monthly</SelectItem>
           </SelectContent>
         </Select>
         {/* for goal selection */}
         <Button onClick={() => setIsProfileModalOpen(true)}>
-          Set Nutrition Goal
+          Set Goal
         </Button>
 
         {/* sd */}
         <Button onClick={() => setShowInputForm(true)} disabled={showInputForm}>
-          <Plus className="mr-2 h-4 w-4" /> Add New Entry
+          <Plus className="mr-2 h-4 w-4" /> Add
         </Button>
 
         <div className="mb-4 flex justify-center items-center">
@@ -308,7 +308,7 @@ export default function NutritionTracker() {
         <Card className="mb-6">
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
-              What did you eat today?
+              Add food to log
               <Dialog>
                 <DialogTrigger asChild>
                   <Button variant="outline" size="icon">

@@ -105,7 +105,7 @@ export function UserProfileModal({ isOpen, onClose, onSave }: UserProfileModalPr
             <Input id="age" value={age} onChange={(e) => setAge(e.target.value)} className="col-span-3" />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <label htmlFor="height" className="text-right">Height (cm)</label>
+            <label htmlFor="height" className="text-right">Height (cm&sup2;)</label>
             <Input id="height" value={height} onChange={(e) => setHeight(e.target.value)} className="col-span-3" />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
